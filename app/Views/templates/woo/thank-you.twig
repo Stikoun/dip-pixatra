@@ -1,0 +1,20 @@
+{% extends 'layouts/app.twig' %}
+
+{% block body %}
+
+{% include "partials/breadcrumbs.twig" %}
+
+<div class="container my-5 text-center lg:w-[80%]">
+    {{ svg('envelope', { class: 'w-[150px] mx-auto' } ) }}
+    <h1 class="text-28 font-bold mb-5 text-center md:text-40">Děkujeme za Vaší objednávku.</h1>
+    <p>Rekapitulaci objednávky jsme Vám zaslali e-mailem.</p>
+    <div class="editor-content">
+        {% filter shortcodes %}
+            [woocommerce_checkout]
+        {% endfilter %}
+    </div>
+    <a href="/" class="border-primary text-primary rounded-2xl border p-4 inline-block mt-5 hover:bg-primary hover:text-white">Zpět na hlavní stránku</a>
+</div>
+
+
+{% endblock %}

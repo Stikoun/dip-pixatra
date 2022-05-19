@@ -1,0 +1,275 @@
+{% extends 'layouts/app.twig' %}
+{% set productToShow = 12 %}
+
+{% block body %}
+ 
+{{ fn('woocommerce_output_all_notices') }}
+
+<section class="pt-3 border-b border-grayDivider md:pt-5">
+    <div class="container">
+        {{ breadcrumbs() }}
+        <h1 class="main-heading mt-3">{{ category.name }}</h1>
+        {% if category.description %}
+        <p class="mt-5 mb-3">{{ category.description }}</p>       
+        {% endif %}
+        {% if subcategories %}
+        <div class="grid grid-cols-2 gap-4 mt-6 pb-5 sm:grid-cols-3 md:grid-cols-5">
+            {% for subcategory in subcategories %}
+            <a href="{{ subcategory.link }}">
+                <div class="bg-blue rounded flex items-center h-14 shadow-box px-2 hover:bg-blue2 {{ subcategory.thumbnail ? '' : 'justify-center' }}">
+                    {% if subcategory.thumbnail %}
+                    <picture class="basis-[30%] shrink-0 mr-2">
+                        <source srcset="{{ subcategory.thumbnail |resize(100, auto)|towebp }}" type="image/webp">
+                        <source srcset="{{ subcategory.thumbnail |resize(100, auto)|tojpg }}" type="image/jpeg">
+                        <img src="{{ subcategory.thumbnail |resize(100, auto)|tojpg }}" alt="{{ subcategory.thumbnail.alt }}" loading="lazy" class="!w-full !h-full object-contain p-1.5">
+                    </picture>                   
+                    {% endif %}
+                    <span class="font-bold text-14">{{ subcategory.name }}</span>
+                </div>        
+            </a>       
+            {% endfor %}
+        </div>
+        {% endif %}
+        <div class="flex items-center rounded-md bg-primary text-white p-2 text-14 font-bold">
+            {{ svg('info', { class: 'inline-block h-4 w-4 mr-3 fill-white shrink-0' }) }}
+            <p class="hidden md:block">{{ options.info_box }}</p>
+            <p class="md:hidden">Všechny telefony jsou řádně testovány a plně funkční.</p>
+        </div>
+        {% if best_sellers %}
+        <div class="mt-4 md:mt-9">
+            <h2 class="text-24 mb-6">Nejprodávanější kousky</h2>
+            <div class="flex flex-col md:flex-row">
+            {% for product in best_sellers %}
+                {% include 'components/productCardSmall.twig' with {
+                    ID: product.ID
+                }%}       
+            {% endfor %} 
+            </div>
+        </div>       
+        {% endif %}
+        <div class="text-right mt-5">
+            <button type="button" id="filter-cheap" class="js-sort active border border-b-0 border-grayDivider mx-1 bg-gray2 p-2">Nejlevnější</button>
+            <button type="button" id="filter-expensive" class="js-sort border border-b-0 border-grayDivider mx-1 bg-gray2 p-2">Nejdražší</button>
+            {# <button type="button" id="filter-best" class="js-sort border border-b-0 border-grayDivider mx-1 bg-gray2 p-2">Nejprodávanější</button> #}
+        </div>
+    </div>
+</section>
+
+
+<section class="archive-product">
+    <div class="container">
+        <button type="button" class="filter-trigger md:hidden">Zobrazit filtry</button>
+        <div class="block md:flex">
+            <div class="overlay-wrapper"></div>
+            <div id="product-filters-wrapper">
+                <div id="sidebar" class="hidden fixed w-[60vw] p-5 bg-white h-full shadow-circle top-0 left-0 z-50 md:static md:shadow-none md:p-0 md:pt-8 md:block md:w-auto">
+                    <span class="text-28 font-bold">{{ title }}</span>
+                    <form id="product-filters">
+                        {% if attribute_varianta %}
+                        <fieldset class="pa_varianta mb-4">
+                            <legend class="text-18 text-gray font-bold">Stav zařízení</legend>
+                            {% for attribute in attribute_varianta %}
+                            <div class="relative flex items-center py-1">
+                                <input type="checkbox" class="border text-black border-grayDivider focus:ring-primary checked:bg-primary checked:focus:bg-primary" name="variation" id="variation-{{ attribute.slug }}" value="{{ attribute.slug }}">
+                                <label for="variation-{{ attribute.slug }}" class="ml-2 font-bold">
+                                    {{ attribute.name }}
+                                </label>
+                            </div>                    
+                            {% endfor %}
+                        </fieldset>                    
+                        {% endif %}
+                        {% if attribute_kapacita %}
+                        <fieldset class="pa_kapacita mb-4">
+                            <legend class="text-18 text-gray font-bold">Kapacita zařízení</legend>
+                            {% for attribute in attribute_kapacita %}
+                            <div class="relative flex items-center py-1">
+                                <input type="checkbox" class="border text-black border-grayDivider focus:ring-primary checked:bg-primary checked:focus:bg-primary" name="capacity" id="capacity-{{ attribute.slug }}" value="{{ attribute.slug }}">
+                                <label for="capacity-{{ attribute.slug }}" class="ml-2 font-bold">
+                                    {{ attribute.name }}
+                                </label>
+                            </div>                    
+                            {% endfor %}
+                        </fieldset>
+                        {% endif %}
+                        {% if attribute_barva %}
+                        <fieldset class="pa_barva">
+                            <legend class="text-18 text-gray font-bold ">Barva zařízení</legend>
+                            {% for attribute in attribute_barva %}
+                            <div class="relative flex items-center py-1">
+                                <input type="checkbox" class="border text-black border-grayDivider focus:ring-primary checked:bg-primary checked:focus:bg-primary" name="capacity" id="capacity-{{ attribute.slug }}" value="{{ attribute.slug }}">
+                                <label for="capacity-{{ attribute.slug }}" class="ml-2 font-bold">
+                                    {{ attribute.name }}
+                                </label>
+                            </div>                    
+                            {% endfor %}
+                        </fieldset>                   
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+            <div class="pt-2 w-full md:pl-10 md:pt-8">
+                <div id="product-wrapper">
+                {% for product in products %}
+                    {{ fn("timber_set_product", product) }}
+                    {% if loop.index0 < productToShow %}
+                        {% include 'components/productCard.twig' with {
+                            ID: product.ID,
+                            items: 3
+                        } %}  
+                    {% else %}
+                        {% include 'components/productCard.twig' with {
+                            ID: product.ID,
+                            items: 3,
+                            hidden: true,
+                        } %}            
+                    {% endif %}
+                {% endfor %}
+                </div>
+                <div class="grid grid-cols-1 my-6 md:grid-cols-3 md:my-10">
+                    <a href="#" class="fixed bottom-3 right-6 h-14 border-4 border-gray flex items-center justify-center rounded-full w-14 shrink-0 md:static">
+                        {{ svg('up-arrow', { class: 'h-3 w-3 fill-gray' }) }}  
+                    </a>
+                    <button class="rounded-full px-12 py-3 font-bold border-4 border-gray mx-auto" id="load-more">Načíst další</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+jQuery('.filter-trigger').click(function() {
+    jQuery('#product-filters-wrapper #sidebar').css('display', 'block');
+    jQuery('.archive-product .overlay-wrapper').css('display', 'block');
+});
+
+jQuery('.archive-product .overlay-wrapper').on('click', function(element) {
+    if (element.target == this ) {
+        jQuery(this).css('display', 'none');
+        jQuery('#product-filters-wrapper #sidebar').css('display', 'none');
+    }
+});
+
+</script>
+
+<script>
+
+var ajaxurl = '{{ fn( 'admin_url', 'admin-ajax.php' ) }}';
+
+jQuery('#product-filters input').on('change', function() {
+
+    let checkedVariationFilter = [];
+    let checkedCapacityFilter = [];
+    let checkedColorFilter = [];
+
+    jQuery(".pa_varianta input[type=checkbox]:checked").each(function(){
+        checkedVariationFilter.push(jQuery(this).val());
+    });
+
+    jQuery(".pa_kapacita input[type=checkbox]:checked").each(function(){
+        checkedCapacityFilter.push(jQuery(this).val());
+    });
+
+    jQuery(".pa_barva input[type=checkbox]:checked").each(function(){
+        checkedColorFilter.push(jQuery(this).val());
+    });
+
+    console.log(checkedVariationFilter);
+    console.log(checkedCapacityFilter);
+    console.log(checkedColorFilter);
+
+    jQuery.ajax({
+        type: 'POST',
+        url: ajaxurl,
+        data: {
+            'action'   : 'ajax_product_filter', 
+            'variations': checkedVariationFilter,
+            'capacity': checkedCapacityFilter,
+            'color': checkedColorFilter,
+            'term_id': {{ term_id  ? term_id : -1 }},
+        },
+        beforeSend: function() {
+            jQuery('#product-wrapper').addClass('is-loading');
+        },
+        success: function( response ) {
+            jQuery('#product-wrapper').removeClass('is-loading');
+
+            jQuery("#product-wrapper").html(response);
+
+            const hidden_items = jQuery("#product-wrapper > .hidden");
+            if (hidden_items.length == 0) {
+                jQuery("#load-more").hide();
+            }
+            else {
+                jQuery("#load-more").show();
+            }
+        },
+    });
+})
+</script>
+
+<script type="text/javascript">
+    const productToShow = 12;
+
+    const hidden_items = jQuery("#product-wrapper > .hidden");
+    if (hidden_items.length == 0) {
+        jQuery("#load-more").hide();
+    }
+
+    jQuery("#load-more").click(function() {
+        const items = jQuery("#product-wrapper > .hidden");
+        
+        if (items.length > 0) {
+            items.each(function(index) {
+                if (index < productToShow) {
+                    jQuery(this).removeClass('hidden');
+                }
+            })
+
+            if (items.length <= productToShow) {
+                jQuery(this).hide();
+            }
+        }
+    });
+</script>
+
+<script type="text/javascript" >
+    var ajaxurl = '{{ fn( 'admin_url', 'admin-ajax.php' ) }}';
+
+   jQuery(".js-sort").click(function() {
+
+    let products = [];
+    const type = jQuery(this).prop('id');
+
+    jQuery('#product-wrapper > div').each(function() {
+        products.push(jQuery(this).attr('data-product-id'));
+    })
+
+    jQuery(".js-sort").each(function() {
+        jQuery(this).removeClass('active');
+    })
+
+    jQuery(this).addClass('active');
+
+    jQuery.ajax({
+        type: 'POST',
+        url: ajaxurl,
+        data: {
+            'action'   : 'ajax_sort_products', 
+            'products' : products,
+            'type' : type,
+        },
+        beforeSend: function() {
+            jQuery('#product-wrapper').addClass('is-loading');
+        },
+        success: function( response ) {
+            jQuery('#product-wrapper').removeClass('is-loading');
+
+            jQuery("#product-wrapper").html(response);
+        },
+    });
+   });
+</script>
+
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "layouts/app.twig" %}
+
+{% block body %}
+
+{% include "partials/breadcrumbs.twig" %}
+
+<section class="section">
+    <div class="container editor-content">
+        <div class="grid md:grid-cols-[60%_40%] pb-[155px]">
+            <div>
+                <h1 class="main-heading">Varianty<br>našich zařízení</h1>
+                <p>Zařízení může nést známky užívání, proto jsme vytvořili stupnici&nbsp;<strong>A+</strong>&nbsp;/&nbsp;<strong>A</strong>&nbsp;/&nbsp;<strong>B+</strong></p>
+                <p><strong>A+</strong>&nbsp;je varianta pro náročné uživatele, kteří chtějí telefon, na kterém nebudou vidět žádné známky používání. Telefon je ve stavu nového.</p>
+                <p>U <strong>A</strong>&nbsp;je jediný rozdíl od <strong>A+</strong> malá vlásečnicová oděrka. Prakticky neviditelné při používání zařízení.</p>
+                <p><strong>B+&nbsp;</strong>je varianta, která ohromí cenou a stavem, ve kterém zařízení dorazí. Lehké škrábance na displeji zakryje sklo, které vám nalepíme a na těle zařízení budou okem viditelné škrábance nebo známky šetrného ale viditelného použití.</p>
+            </div>
+            <picture>
+                <source srcset="{{ asset('images/ilustrace.png')|towebp }}" type="image/webp">
+                <source srcset="{{ asset('images/ilustrace.png') }}" type="image/png">
+                <img src="{{ asset('images/ilustrace.png') }}" alt="" loading="lazy">
+            </picture>
+        </div>
+
+    </div>
+</section>
+
+<section class="bg-lightGray">
+    <div class="container py-5">
+        {% include "partials/variations.twig" with {
+            variationsPage: true
+        } %}
+    </div>
+</section>
+
+<section>
+    <div class="container editor-content my-10">
+        <h3><strong>Jak je to se zárukou a&nbsp;funkčností&nbsp;</strong></h3>
+        <p>Telefon zaručeně funguje a bude fungovat. Všechny použité telefony jsou hned při výkupu řádně testovány na funkčnost jejich veškeré výbavy a za plnou funkčnost telefonu ručíme zárukou na 24 měsíců. Na tyto telefony se také vztahuje doživotní záruka na původ zařízení.</p>
+        <h3><strong>Na co se připravit</strong></h3>
+        <p>Jediné, na co vás chceme upozornit, je baterie. Baterie se pohybují mezi 100-80% a u každého produktu je kapacita přehledně popsána. V případě, že má baterie kapacitu nižší, měníme jí za novou. Velkou výhodou je ale cena telefonu, která je podstatně nižší, než kdybyste si pořizovali zcela nový telefon. Je tedy ideální variantou pro všechny, kteří netrvají na zakoupení nového telefonu a je jim jasné, že by případné kosmetické vady vznikly i při běžném používání. Díky tomu si mohou pořídit telefon s výrazně lepší výbavou za mnohem lepší cenu.</p>
+        <p>Všechny naše telefony se prodávají se ve zvláštním daňovém režimu dle § 90 od DPH, což je důležitá informace zejména pro podnikatele či firmy.</p>
+    </div>
+</section>
+
+{% endblock %}

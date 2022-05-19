@@ -1,0 +1,14 @@
+{% extends 'layouts/app.twig' %}
+
+{% block body %}
+
+<div class="container md:my-10">
+
+    <h1>{{ post.title }}</h1>
+    {% filter shortcodes %}
+        [woocommerce_cart]
+    {% endfilter %}
+
+</div>
+
+{% endblock %}

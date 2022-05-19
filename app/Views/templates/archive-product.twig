@@ -1,0 +1,135 @@
+{% extends 'layouts/app.twig' %}
+
+{% block body %}
+
+{% for post in test %}
+    {{ post.ID }}
+{% endfor %}
+
+<section class="pt-5 py-10 border-b border-grayDivider">
+    <div class="container">
+        {{ breadcrumbs() }}
+        <h1 class="text-32 font-bold mt-3">{{ category.name }}</h1>
+        {% if category.description %}
+        <p class="mt-5"> {{ category.description }}</p>       
+        {% endif %}
+        <div class="flex items-center rounded-full bg-gray text-white p-2 text-14 font-bold">
+            {{ svg('question', { class: 'inline-block h-4 w-4 mr-3 fill-white shrink-0' }) }}
+            <p>Všechny telefony jsou řádně testovány a plně funkční.
+            U nás máš 100% jistotu, že kupuješ telefon s prověřeným původem.  Ke každému telefonu dostaneš dárek.</p>
+        </div>
+        {% if subcategories %}
+        <div class="grid grid-cols-3 gap-4 mt-6 md:grid-cols-6">
+            {% for subcategory in subcategories %}
+            <a href="{{ subcategory.link }}">
+                <div class="rounded-full flex items-center h-16 shadow-box">
+                    {% if subcategory.thumbnail %}
+                    <picture>
+                        <source srcset="{{ subcategory.thumbnail |resize(100, auto)|towebp }}" type="image/webp">
+                        <source srcset="{{ subcategory.thumbnail |resize(100, auto)|tojpg }}" type="image/jpeg">
+                        <img src="{{ subcategory.thumbnail |resize(100, auto)|tojpg }}" alt="{{ subcategory.thumbnail.alt }}" loading="lazy" class="rounded-full mr-4 /3 !h-full object-cover shrink-0 p-1">
+                    </picture>                   
+                    {% endif %}
+                    <span class="font-bold">{{ subcategory.name }}</span>
+                </div>        
+            </a>       
+            {% endfor %}
+        </div>
+        {% endif %}
+        <div class="mt-4 md:mt-9">
+            <h2 class="text-24 mb-6">Nejprodávanějěí kousky</h2>
+            <div class="flex justify-between flex-wrap md:flex-nowrap">
+            {% for product in options.products_bestsellers %}
+                {% include 'components/productCardSmall.twig' with {
+                    ID: product.ID
+                }%}       
+            {% endfor %} 
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="flex">
+            <div class="hidden basis-[20%] flex-shrink-0 border-r border-grayDivider pt-8 md:block">
+                <span class="text-28 font-bold">{{ title }}</span>
+                <form action="">
+                    <fieldset>
+                        <legend class="text-18 text-gray font-bold mb-2">Stav zařízení</legend>
+                        {% for attribute in attribute_varianta %}
+                        <div class="relative flex items-center py-1">
+                            <input type="checkbox" class="border text-vlack focus:ring-black border-black" name="variation" id="variation">
+                            <label for="variation" class="ml-2">
+                                {{ attribute }}
+                            </label>
+                        </div>                    
+                        {% endfor %}
+                    </fieldset>
+                </form>
+            </div>
+            <div class="pt-8 w-full md:pl-10">
+                <div class="flex justify-between flex-wrap md:flex-nowrap">
+                    <label class="hidden md:block">
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                        <span class="font-bold">{{ 'Jen skladem' }}</span>
+                    </label> 
+                    <div class="font-bold">
+                        <a href="#" class="mr-4 text-gray">Nejoblíbenější</a>
+                        <a href="#" class="mr-4 text-gray">Nejlevnější</a>
+                        <a href="#" class="text-gray">Nejdražší</a>
+                    </div>
+                </div>
+                <div class="flex flex-wrap" id="product-wrapper">
+                {% for product in products %}
+                    {% include 'components/productCard.twig' with {
+                        ID: product.ID,
+                        items: 3
+                    } %}
+                {% endfor %}
+                </div>
+                <div class="grid grid-cols-1 my-6 md:grid-cols-3 md:my-10">
+                    <a href="#" class="fixed bottom-3 right-6 h-14 border-4 border-gray flex items-center justify-center rounded-full w-14 shrink-0 md:static">
+                        {{ svg('up-arrow', { class: 'h-3 w-3 fill-gray' }) }}  
+                    </a>
+                    <button class="rounded-full px-12 py-3 font-bold border-4 border-gray mx-auto" id="load-more">Načíst další</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<script type="text/javascript" >
+    var current_page = 1;
+    var ajaxurl = '{{ fn( 'admin_url', 'admin-ajax.php' ) }}';
+
+   jQuery("#load-more").click(function() {
+
+    jQuery.ajax({
+        type: 'POST',
+        url: ajaxurl,
+        data: {
+            'action'   : 'ajax_load_more_products', 
+            'posts_per_page': 6,
+            'current_page': current_page + 1,
+            'term_id': '{{ category.term_id }}',
+        },
+        beforeSend: function() {
+            $('#product-wrapper').addClass('is-loading');
+        },
+        success: function( response ) {
+            $('#product-wrapper').removeClass('is-loading');
+            current_page += 1;
+
+            jQuery("#product-wrapper").append(response);
+        },
+    });
+   });
+</script>
+
+
+{% endblock %}

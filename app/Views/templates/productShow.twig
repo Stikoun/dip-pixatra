@@ -1,0 +1,14 @@
+<div class="container text-center">
+    {% include 'components/heading.twig' %}   
+    
+    <div class="flex mt-6 flex-wrap md:mt-14 md:flex-nowrap">
+        {% for product in products %}
+            {% include 'components/productCard.twig' with {
+                ID: product.ID
+            }%}          
+        {% endfor %}
+
+    </div>
+</div>
+
+

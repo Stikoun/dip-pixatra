@@ -1,0 +1,78 @@
+{% extends "layouts/app.twig" %}
+
+{% block body %}
+
+{% include "partials/breadcrumbs.twig" %}
+<section class="section">
+    <div class="container">
+        <div class="grid md:grid-cols-2">
+            <div class="bg-gray2 flex flex-col py-5 px-10 justify-center lg:px-14">
+                <h1 class="text-32 mb-3 font-bold lg:text-40">Máme vlastní servis</h1>
+                <p class="lg:text-20">
+                    Problém s Apple zařízením? Prasklý displej 
+                    u iPhone? Vytopený MacBook?
+                    Pro nás žádný problém.<br><br>
+
+                    Kromě e-shopu a kamenné prodejny 
+                    s Apple zařízeními vlastníme také servis 
+                    pro Apple zařízení.<br><br>
+
+                    Žádná oprava produktů od Apple nám není cizí.
+                </p>
+            </div>
+            <div>
+                <picture>
+                    <source srcset="{{ asset('images/service-hero-1.jpg')|towebp }}" type="image/webp">
+                    <source srcset="{{ asset('images/service-hero-1.jpg')|tojpg }}" type="image/jpeg">
+                    <img src="{{ asset('images/service-hero-1.jpg')|tojpg }}" alt="Logo firmy Zásilkovna.cz" loading="lazy">
+                </picture> 
+            </div>
+            <div>
+                <picture>
+                    <source srcset="{{ asset('images/service-hero-2.jpg')|towebp }}" type="image/webp">
+                    <source srcset="{{ asset('images/service-hero-2.jpg')|tojpg }}" type="image/jpeg">
+                    <img src="{{ asset('images/service-hero-2.jpg')|tojpg }}" alt="Logo firmy Zásilkovna.cz" loading="lazy">
+                </picture> 
+            </div>
+            <div class="bg-gray2 flex flex-col py-5 px-10 justify-center lg:px-14">
+                <h2 class="text-32 mb-3 font-bold lg:text-40">Jaké produkty opravujeme?</h2>
+                <p class="lg:text-20">
+                    Zaměřujeme se na všechny zařízení značky Apple, nejčastěji iPhone.
+                    Nemusíte se tedy bát zastavit se starším iPhone,
+                    pomalým iMacem nebo vytopeným iPadem.
+                    Se vším Vám vždy rádi pomůžeme.<br><br>
+
+                    Pokud máte tedy problém, a to se zařízením od nás nebo odjinud,
+                    neváhejte nám zavolat nebo se rovnou zastavte,
+                     diagnostika je k opravě vždy zdarma.             
+                </p>
+            </div>
+            <div class="bg-gray2 flex flex-col py-5 px-10 justify-center lg:px-14">
+                <h2 class="text-32 mb-3 font-bold lg:text-40">Kde nás najdete?</h2>
+                <p class="lg:text-20">
+                    Abychom Vám mohli poskytovat služby
+                    v plném rozsahu, máme v Praze hned dvě
+                    pobočky.<br><br>
+                    
+                    První pobočku naleznete na stejné adrese
+                    jako je pobočka DostupnyiPhone.cz - 
+                    Korunní 1295/55, Praha 2, druhá pobočka
+                    sídlí na Praze 8, adresa - Sokolovská 1291/172, 
+                    Praha 8 - Libeň.
+                </p>
+            </div>
+            <div>
+                <picture>
+                    <source srcset="{{ asset('images/service-hero-3.jpg')|towebp }}" type="image/webp">
+                    <source srcset="{{ asset('images/service-hero-3.jpg')|tojpg }}" type="image/jpeg">
+                    <img src="{{ asset('images/service-hero-3.jpg')|tojpg }}" alt="Logo firmy Zásilkovna.cz" loading="lazy">
+                </picture> 
+            </div>
+        </div>
+        <div>
+            <iframe width="100%" height="500" src="https://maps.google.com/maps?q=opravimeiphone.cz%20korunn%C3%AD&t=&z=15&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

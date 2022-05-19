@@ -1,0 +1,90 @@
+const defaultTheme = require('tailwindcss/defaultTheme');
+
+module.exports = {
+  content: ["./app/Views/**/*.twig"],
+  theme: {
+    screens: {
+			sm: "640px",
+			md: "768px",
+			lg: "1024px",
+			xl: "1140px",
+			"2xl": "1200px",
+		},
+    colors: {
+      transparent: "transparent",
+      current: "currentColor",
+      primary: "#d6bd94",
+      secondary: "#1d1d1f",
+      white: "#FFF",
+      black: '#000',
+      red: "#ff0007",
+      blue: 'rgba(236,245,254,1)',
+      blue2: 'rgba(236,245,254,0.4)',
+      green: "#00a500",
+      gray: "#9fa0a4",
+      lightGray: "#efefef",
+      darkGray: '#5b5b5b',
+      grayDivider: '#d4d4d4',
+      gray2: '#f7f7f7',
+      gray3: '#727272',
+      overlay_dark: 'rgba(0,0,0,0.85)',
+      overlay_light: 'rgba(0,0,0,0.4)',
+      blackLight: 'rgba(0,0,0,0.7)',
+    },
+    fontSize: {
+			12: ".75rem",
+			14: ".875rem",
+			16: "1rem",
+			18: "1.125rem",
+			20: "1.25rem",
+			24: "1.5rem",
+      28: "1.75rem",
+			32: "2rem",
+			40: "2.5rem",
+			48: "3rem",
+			72: "4.5rem",
+			80: "5rem",
+			96: "6rem",
+			112: "7rem",
+			128: "8rem",
+			144: "9rem",
+		},
+    boxShadow: {
+      'button':  '0px -3px 1px 0px rgba(42, 133, 0, 0.42) inset',
+      'circle':  '0px 0px 10px 0px rgba(52, 51, 55, 0.14)',
+      'box': '0 -1px 0 0 rgb(0 0 0 / 10%) inset',
+      'none' : 'none'
+    },
+    container: {
+      center: true,
+    },
+    extend: {
+      fontFamily: {
+        sans: ['Poppins', ...defaultTheme.fontFamily.sans],
+      },
+      gridTemplateColumns: {
+        '60/40': '60% 40%',
+      }
+    },
+  },
+  safelist: [
+    'inline-block',
+    'h-3',
+    'w-3',
+    'fill-gray',
+    'mx-3',
+    'md:h-5',
+    'md:w-5',
+    'lg:flex-row',
+    'lg:pr-6',
+    'border-b-2',
+    'mt-3',
+    'w-[150px]',
+    'gap-6',
+    '!text-center',
+    'md:px-4',
+  ],
+  plugins: [
+    require('@tailwindcss/forms'),
+  ],
+}

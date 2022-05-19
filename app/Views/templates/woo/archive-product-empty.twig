@@ -1,0 +1,67 @@
+{% extends 'layouts/app.twig' %}
+
+{% block body %}
+ 
+ {{ fn('woocommerce_output_all_notices') }}
+
+ {% include "partials/breadcrumbs.twig" %}
+
+
+<section class="section">
+    <div class="container">
+        <div class="flex flex-wrap  md:flex-nowrap">
+            <div class="mb-10 md:mb-0 md:basis-2/3 md:shrink-0">
+                <h1 class="main-heading mb-8">
+                    V tuto chvíli ještě nemáme<br>
+                    produkty skladem,<br>
+                    <span class="text-primary">ale již na tom pracujeme.</span>
+                </h1>
+                <p class="text-24 mb-8">Pokud potřebujete <strong>{{ category.name }}</strong> teď, zavolejte nám<br>
+                    a my Vám rádi seženeme přesně
+                    {% if category.slug == 'ipad' %}
+                    takový, jaký potřebujete.
+                    {% elseif category.slug == 'airpods' %}
+                    takové, jaké potřebujete.
+                    {% elseif category.slug == 'macbook' %}
+                    takový, jaký potřebujete.
+                    {% elseif category.slug == 'apple-watch' %}
+                    takové, jaké potřebujete.
+                    {% else %}
+                        to, co potřebujete.                                                                         
+                    {% endif %}
+                </p>
+                <a href="/kontakty" class="button-custom">KONTAKTOVAT NÁS</a>
+            </div>
+            {% if category.slug == 'ipad' %}
+            <picture>
+                <source srcset="{{ asset('images/soon-instock-ipad.png')|towebp }}" type="image/webp">
+                <source srcset="{{ asset('images/soon-instock-ipad.png') }}" type="image/png">
+                <img src="{{ asset('images/soon-instock-ipad.png') }}" alt="{{ slide.alt }}" loading="lazy" class="w-full h-full">
+            </picture>
+            {% elseif category.slug == 'airpods' %}
+            <picture>
+                <source srcset="{{ asset('images/soon-instock-airpods.png')|towebp }}" type="image/webp">
+                <source srcset="{{ asset('images/soon-instock-airpods.png') }}" type="image/png">
+                <img src="{{ asset('images/soon-instock-airpodst.png') }}" alt="{{ slide.alt }}" loading="lazy" class="w-full h-full">
+            </picture>
+            {% elseif category.slug == 'macbook' %}
+            <picture>
+                <source srcset="{{ asset('images/soon-instock-macbook.png')|towebp }}" type="image/webp">
+                <source srcset="{{ asset('images/soon-instock-macbook.png') }}" type="image/png">
+                <img src="{{ asset('images/soon-instock-macbook.png') }}" alt="{{ slide.alt }}" loading="lazy" class="w-full h-full">
+            </picture>
+            {% elseif category.slug == 'apple-watch' %}
+            <picture>
+                <source srcset="{{ asset('images/soon-instock-watch.png')|towebp }}" type="image/webp">
+                <source srcset="{{ asset('images/soon-instock-watch.png') }}" type="image/png">
+                <img src="{{ asset('images/soon-instock-watch.png') }}" alt="{{ slide.alt }}" loading="lazy" class="w-full h-full">
+            </picture>                                                                          
+            {% endif %}
+               
+        </div>
+
+    </div>
+</section>
+
+
+{% endblock %}

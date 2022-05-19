@@ -1,0 +1,25 @@
+<div class="swiper-slide shadow-circle p-12 rounded-3xl bg-white !h-[initial]">
+    <div class="flex">
+        <picture>
+            <source srcset="{{ image|resize(150)|towebp }}" type="image/webp">
+            <source srcset="{{ image |resize(150)|tojpg }}" type="image/jpeg">
+            <img src="{{ image|resize(150)|tojpg }}" alt="{{ image_alt }}" loading="lazy" class="rounded-full w-16 mb-3 mr-3">
+        </picture>
+        <div>
+            <span class="font-bold text-18">{{ author }}</span>
+        </div>
+    </div>
+    <div class="flex items-center">
+        <div class="flex mt-3 mb-2">
+            {{ svg('star-gradient', { class: 'fill-green h-4 w-4 mr-1' }) }}
+            {{ svg('star-gradient', { class: 'fill-green h-4 w-4 mr-1' }) }}
+            {{ svg('star-gradient', { class: 'fill-green h-4 w-4 mr-1' }) }}
+            {{ svg('star-gradient', { class: 'fill-green h-4 w-4 mr-1' }) }}
+            {{ svg('star-gradient', { class: 'fill-green h-4 w-4 mr-1' }) }}
+        </div>
+        <span class="text-14 text-gray">{{ date }}</span>
+    </div>
+    <p class="text-14">
+        {{ content|truncate(30) }}
+    </p>
+</div>

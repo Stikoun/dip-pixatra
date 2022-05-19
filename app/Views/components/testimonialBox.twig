@@ -1,0 +1,46 @@
+{% if layout == 'vertical' %}
+    <div class="swiper-slide flex items-center flex-col text-center px-10 mb-5 md:mb-0">
+        {% if image %}
+        <a href="{{ fn('get_field','source', id) }}" target="_blank">
+            <picture>
+                <source srcset="{{ image|resize(200, 200)|towebp }}" type="image/webp">
+                <source srcset="{{ image |resize(200,200)|tojpg }}" type="image/jpeg">
+                <img src="{{ image|resize(200,200)|tojpg }}" alt="{{ image_alt }}" loading="lazy" class="rounded-full w-20 h-20 mb-3">
+            </picture>
+        </a>
+        {% endif %}
+        <span class="block font-bold">{{ name }}</span>
+        <p class="text-14 mt-3"><em>{{ content }}</em></p>
+    </div>
+{% else %}
+    <div class="flex mb-7">
+        {% if image %}
+        <a href="{{ fn('get_field','source', id) }}" target="_blank">
+            <div class="shadow-circle rounded-full w-20 h-20 shrink-0 mr-7">
+                <picture>
+                    <source srcset="{{ image|resize(200, 200)|towebp }}" type="image/webp">
+                    <source srcset="{{ image |resize(200,200)|tojpg }}" type="image/jpeg">
+                    <img src="{{ image|resize(200,200)|tojpg }}" alt="{{ image_alt }}" loading="lazy" class="p-3">
+                </picture>
+            </div>
+        </a>
+        {% endif %}
+        <div>
+            <p class="text-14 leading-5"><em>{{ content }}</em>
+            </p>
+            <div class="flex mt-3 mb-2">
+                {{ svg('star-gradient', { class: 'fill-green h-5 w-5 mr-1' }) }}
+                {{ svg('star-gradient', { class: 'fill-green h-5 w-5 mr-1' }) }}
+                {{ svg('star-gradient', { class: 'fill-green h-5 w-5 mr-1' }) }}
+                {{ svg('star-gradient', { class: 'fill-green h-5 w-5 mr-1' }) }}
+                {{ svg('star-gradient', { class: 'fill-green h-5 w-5 mr-1' }) }}
+            </div>
+            <span class="font-bold">{{ name }}</span>
+        </div>
+    </div>   
+{% endif %}
+
+
+
+
+

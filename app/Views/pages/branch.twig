@@ -1,0 +1,87 @@
+{% extends "layouts/app.twig" %}
+
+{% block body %}
+
+{% include "partials/breadcrumbs.twig" %}
+
+<section class="section">
+    <div class="container">
+        <div class="mb-10 md:flex md:justify-between"> 
+            <div class="basis-[48%] shrink-0 mb-10 flex flex-col justify-center md:px-10">
+                <h1 class="main-heading mb-3">Naše<br> prodejna</h1>
+                <p class="text-20">
+                    Nachází se v samotném centru Prahy, 
+                    v ulici Korunní 1295/55 na Praze 2 - Vinohrady.
+                    Dostat se k nám můžete tramvají ze zastávky 
+                    Šumavská nebo metrem ze stanice Jiřího z
+                    Poděbrad. Parkování kolem prodejny
+                    je možné pouze na zonách placeného stání.
+                </p>
+            </div>
+            <picture>
+                <source srcset="{{ asset('images/prodejna.png')|towebp }}" type="image/webp">
+                <source srcset="{{ asset('images/prodejna.png') }}" type="image/png">
+                <img src="{{ asset('images/prodejna.png') }}" alt="{{ slide.alt }}" loading="lazy" class="w-full">
+            </picture>
+        </div>
+    </div>
+</section>
+
+<section>
+    <iframe width="100%" height="500" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2560.5771664306912!2d14.444160515778242!3d50.07547992219283!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470b9394c21e40ad%3A0xdf7547a134242541!2zRG9zdHVwbnlpUGhvbmUuY3ogfCBaw6Fub3Zuw60gYSBwb3XFvml0w70gaVBob25l!5e0!3m2!1scs!2scz!4v1650489314272!5m2!1scs!2scz" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+</section>
+
+<section class="bg-gray2 py-12">
+    <div class="container overflow-hidden">
+        <h2 class="text-center font-bold text-28 md:text-40 mb-10">Co na Vás čeká?</h2>
+        <div class="branch-slider relative pb-12">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide shadow-circle p-12 bg-white">
+                    {{ svg('expresni_vydej', { class: 'h-16 w-16 fill-black mb-5' }) }}
+                    <h3 class="text-28 font-bold mb-3">Expresní výdej</h3>
+                    <p>
+                        Víte, že vydání zásilky trvá průměrně
+                        méně než 3 minuty? Veškeré papíry
+                        vyřídíme  tak rychle, že se nebudete
+                        stačit divit.
+                    </p>    
+                </div>
+                <div class="swiper-slide shadow-circle p-12 bg-white">
+                    {{ svg('platba', { class: 'h-16 w-16 fill-black mb-5' }) }}
+                    <h3 class="text-28 font-bold mb-3">Platba</h3>
+                    <p>
+                        U nás je možné platit v hotovosti, kartou i bankovním převodem.
+                    </p>
+                </div>
+                <div class="swiper-slide shadow-circle p-12 bg-white">
+                    {{ svg('skvely_personal', { class: 'h-16 w-16 fill-black mb-5' }) }}
+                    <h3 class="text-28 font-bold mb-3">Skvělý personál</h3>
+                    <p>
+                        Rádi Vám pomůžeme s výběrem či porovnáním
+                        různých modelů od iPhone po iPad a další. 
+                    </p>    
+                </div>
+                <div class="swiper-slide shadow-circle p-12 bg-white">
+                    {{ svg('posezeni', { class: 'h-16 w-16 fill-black mb-5' }) }}
+                    <h3 class="text-28 font-bold mb-3">Posezení</h3>
+                    <p>
+                        Potřebujete chvíli na rozmyšlenou? 
+                        Posaďte se u nás, rádi Vám připravíme výbornou kávu.
+                    </p>    
+                </div>
+                <div class="swiper-slide shadow-circle p-12 bg-white">
+                    {{ svg('vykup', { class: 'h-16 w-16 stroke-black fill-black mb-5' }) }}
+                    <h3 class="text-28 font-bold mb-3">Výkup</h3>
+                    <p>
+                        Máte staré zařízení na prodej? Na místě ho vykoupíme
+                        a ihned Vám jeho cenu vyplatíme nebo si také můžete
+                        ponížit nákupní cenu nového, je to na Vás.
+                    </p>    
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

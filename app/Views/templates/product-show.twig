@@ -1,0 +1,15 @@
+<div class="container text-center">
+    {% include 'components/heading.twig' %}   
+    
+    <div class="flex my-6 flex-wrap md:my-10 md:flex-nowrap">
+        {% for product in products %}
+        {{ fn("timber_set_product", product) }}
+            {% include 'components/productCardCustom.twig' with {
+                ID: product.ID
+            }%}          
+        {% endfor %}
+
+    </div>
+</div>
+
+

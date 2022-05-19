@@ -1,0 +1,44 @@
+{% set product = fn('wc_get_product',ID) %}
+
+<div 
+    class="{{ items == 3 ? 'w-1/2 md:w-1/3' : 'w-1/2 md:w-1/4' }} {{ hidden ? 'hidden' : '' }} 
+    relative group flex flex-col justify-between text-center py-3 px-2"
+    data-product-id="{{ ID }}"
+>
+    <div class="mb-2">
+        <div class="absolute top-3 right-3">
+            {% if product.get_attribute('pa_varianta') %}
+            <span class="bg-primary text-white text-12 font-bold py-1 px-3 rounded-md md:text-16 md:px-6">{{ product.get_attribute('pa_varianta') }}</span>
+            {% endif %}
+        </div>
+
+        <a href="{{ product.get_permalink() }}">
+            <picture>
+                <source srcset="{{ fn('wp_get_attachment_url', product.get_image_id) |resize(400,400)|towebp }}" type="image/webp">
+                <source srcset="{{ fn('wp_get_attachment_url', product.get_image_id) |resize(400,400)|tojpg }}" type="image/jpeg">
+                <img src="{{ fn('wp_get_attachment_url', product.get_image_id) |resize(400,400)|tojpg }}" alt="{{ slide.alt }}" loading="lazy" class="object-contain mx-auto !max-w-[100px]">
+            </picture>
+
+            <div class="mt-4">  
+                <h3 class="text-18 font-bold md:text-20">{{ product.name|replace({'-': ''}) }}</h3>
+            </div>
+        </a>
+    </div>
+    <div class="w-full flex flex-col items-center">
+        {% if product.get_type == 'variable' %}
+        <span class="block text-18 leading-8 text-red md:text-24">{{fn('wc_price', product.price)}}</span> 
+        {% else %}
+            {% if product.sale_price > 0 %} 
+            <span class="block text-18 leading-8 text-red md:text-24">{{fn('wc_price', product.sale_price)}}</span> 
+            {% elseif product.regular_price > 0 %} 
+            <span class="block text-18 leading-8 text-red md:text-24">{{fn('wc_price', product.regular_price)}}</span>                           
+            {% endif %}                       
+        {% endif %}
+        
+        {% if buy %}
+            {% do action("woocommerce_after_shop_loop_item") %}
+        {% else %}
+            <a href="{{ product.get_permalink() }}" class="hidden bg-green uppercase text-white font-bold shadow-button rounded-md py-2 my-2 w-[80%] md:py-3.5 md:my-3 md:block">Detail produktu</a>     
+        {% endif %}
+    </div>
+</div>

@@ -1,0 +1,20 @@
+{% extends 'layouts/app.twig' %}
+
+{% block body %}
+
+<section class="bg-gray2">
+    <div class="container text-gray3 py-2">
+        {{ breadcrumbs() }}
+    </div>
+</section>
+
+<div class="container md:my-10">
+    <h1 class="main-heading mt-3">{{ post.title }}</h1>
+    {% filter shortcodes %}
+        [woocommerce_my_account]
+    {% endfilter %}
+</div>
+
+
+
+{% endblock %}

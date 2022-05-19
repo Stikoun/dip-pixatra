@@ -1,0 +1,81 @@
+{% extends "layouts/app.twig" %}
+
+{% block body %}
+
+{% include "partials/breadcrumbs.twig" %}
+
+<section class="section">
+    <div class="container">
+        <div class="text-center pb-3 mb-8">
+            <h1 class="main-heading">Máte otázky?</h1>
+            <p class="text-20">Zde najdete odpovědi.</p>
+        </div>
+        <ul id="tabs-wrapper">
+            {% for item in acf.faq %}
+            <li class="{{ loop.index == 1 ? 'active' : '' }} mb-6 font-bold cursor-pointer inline-block text-20" data-target="{{ item.id }}">{{ item.tab }}</li>                      
+            {% endfor %}
+        </ul>
+        <div id="questions-wrapper">
+            {% for item in acf.faq %}
+            <div class="{{ loop.index == 1 ? 'active' : '' }} cursor-pointer" data-target="{{ item.id }}">
+                {% for question in item.content %}
+                <div class="tab shadow-circle py-6 px-4 mb-8 rounded-xl flex items-center">
+                    <div>
+                        <span class="font-bold">{{ question.question }}</span>
+                        <div class="content max-h-0 overflow-hidden transition-all editor-content">
+                            <div class="text-blackLight mt-3 pt-3 border-t border-grayDivider">
+                                {{ question.answer }}
+                            </div>
+
+                        </div>
+                    </div>
+                    <span class="text-primary text-24 leading-none pl-5 self-start">+</span>
+                </div>                     
+                {% endfor %}
+            </div>                
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<script>
+    if (window.matchMedia("(max-width: 768px)").matches) {
+        jQuery('#tabs-wrapper li').on('click', function() {
+            const tab_target_attr = jQuery(this).attr('data-target');
+
+            jQuery('#tabs-wrapper li').each(function() {
+                jQuery(this).removeClass('active');
+            })
+            jQuery(this).addClass('active');
+
+            jQuery('#questions-wrapper > div').each(function() {
+                const question_target_attr = jQuery(this).attr('data-target');
+
+                if (tab_target_attr == question_target_attr) {
+                    jQuery(this).addClass('active');
+                }
+                else {
+                    jQuery(this).removeClass('active');
+                }
+            })
+        })
+    }
+
+
+    jQuery('.tab').on('click', function() {
+        const content = jQuery(this).find('.content');
+        const contentHeight = content.prop('scrollHeight');
+
+        if (content.css('max-height') != '0px') {
+            jQuery(content).css('max-height', 0);     
+            jQuery(this).children('span').html('+');       
+        }
+        else {
+            jQuery(content).css('max-height', contentHeight);
+            jQuery(this).children('span').html('-');
+        }
+
+    })
+</script>
+
+{% endblock %}

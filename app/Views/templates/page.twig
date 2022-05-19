@@ -1,0 +1,15 @@
+{% extends "layouts/app.twig" %}
+
+{% block body %}
+
+{% include "partials/breadcrumbs.twig" %}
+
+<section class="section">
+    <div class="container editor-content">
+        <h1>{{ post.title }}</h1>
+        
+        {{ post.content }}
+    </div>
+</section>
+
+{% endblock %}

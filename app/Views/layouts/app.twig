@@ -1,0 +1,37 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ fn('get_template_directory_uri') }}/assets/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ fn('get_template_directory_uri') }}/assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ fn('get_template_directory_uri') }}/assets/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="{{ fn('get_template_directory_uri') }}/assets/images/favicon/site.webmanifest">
+    <link rel="mask-icon" href="{{ fn('get_template_directory_uri') }}/assets/images/favicon/safari-pinned-tab.svg" color="#d6bd94">
+
+    <link rel="stylesheet" href="{{ fn('get_template_directory_uri') }}/assets/dist/app.css">
+    <script src="https://apps.elfsight.com/p/platform.js" defer></script>
+
+    {{fn('wp_head')}}
+</head>
+<body {{fn('body_class')}}>
+    {% if not fn('is_404') %}
+        {% include 'partials/header.twig' %}
+    {% endif %}
+
+    <main>
+        {% block body %}{% endblock %}       
+    </main>
+
+    {% if not fn('is_404') %}
+        {% include 'partials/footer.twig' %}
+        {{fn('wp_footer')}}
+    {% endif %}
+
+    <script src="{{ asset('dist/app.js') }}" defer></script>
+    <script type="text/javascript">
+        const WP = { "ajaxURL": '{{ site.url }}/wp-admin/admin-ajax.php' }
+    </script>
+</body>
+</html>

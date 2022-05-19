@@ -1,0 +1,29 @@
+{% extends 'layouts/app.twig' %}
+
+{% block body %}
+ 
+ {{ fn('woocommerce_output_all_notices') }}
+
+ {% include "partials/breadcrumbs.twig" %}
+
+
+<section class="section">
+    <div class="container">
+        <div class="flex flex-wrap  md:flex-nowrap">
+            <div class="mb-10 md:mb-0 md:basis-2/3 md:shrink-0">
+                <h1 class="main-heading mb-8">
+                    V tuto chvíli jsme pro Vás nic nenašli
+                    <span class="text-primary">, ale nezoufejte.</span>
+                </h1>
+                <p class="text-24 mb-8">Pokud potřebujete <strong>{{ searchTerm }}</strong> teď, zavolejte nám<br>
+                    a my Vám rádi seženeme přesně to, co potřebujete.
+                </p>
+                <a href="/kontakty" class="button-custom">KONTAKTOVAT NÁS</a>
+            </div>               
+        </div>
+
+    </div>
+</section>
+
+
+{% endblock %}

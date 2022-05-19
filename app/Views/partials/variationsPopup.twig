@@ -1,0 +1,37 @@
+<div class="popupWrapper relative">
+    <div class="overlay-wrapper"></div>
+    <div class="popup p-5 md:p-10">
+        <div class="flex border-b border-b-grayDivider pb-4 items-center justify-between mb-4">
+            <span class="text-28 font-bold">Varianty</span>
+            <span id="variationPopupClose">
+                {{ svg('close', { class: 'h-6 w-6' }) }} 
+            </span>
+        </div>
+        <div class="targetWrapper">
+            <div class="variations-info">
+                {% for variation in options.variations %}
+                <div class="{{ variation.id }}">
+                    <picture>
+                        <source srcset="{{variation.image.url |towebp }}" type="image/webp">
+                        <source srcset="{{ variation.image.url |tojpg }}" type="image/jpeg">
+                        <img src="{{ variation.image.url |tojpg }}" alt="{{ variation.image.alt }}" loading="lazy">
+                    </picture>
+                    <div class="flex flex-wrap items-center justify-between mt-5">
+                        {% for item in variation.icons %}
+                        <div class="basis-1/2 mb-5 flex items-center">
+                            <picture class="w-8 mr-2 shrink-0 md:w-10">
+                                <source srcset="{{ item.icon.url |towebp }}" type="image/webp">
+                                <source srcset="{{ item.icon.url |tojpg }}" type="image/jpeg">
+                                <img src="{{ item.icon.url |tojpg }}" alt="" loading="lazy">
+                            </picture>
+                            <span class="text-14 font-bold md:text-16">{{ item.text }}</span>    
+                        </div>
+                        {% endfor %}
+                    </div>
+                        {{ variation.description|wpautop }}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

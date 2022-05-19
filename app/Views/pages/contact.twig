@@ -1,0 +1,71 @@
+{% extends "layouts/app.twig" %}
+
+{% block body %}
+
+{% include "partials/breadcrumbs.twig" %}
+
+<section class="bg-primary relative h-[250px] md:h-[400px]">
+    <div class="container z-20 relative">
+        <div class="flex flex-col text-white text-center justify-center items-center h-full">
+            <h1 class="main-heading">Pojďme se spojit</h1>
+            <p class="py-3 text-white font-bold text-20">
+                Chcete se na něco zeptat? Rádi Vás uslyšíme nebo rovnou uvidíme u nás na pobočce.
+            </p>
+        </div>
+    </div>
+    <picture class="absolute top-0 left-0 h-full w-full">
+        <source srcset="{{ asset('images/kontakt.jpg') |towebp }}" type="image/webp">
+        <source srcset="{{ asset('images/kontakt.jpg') |tojpg }}" type="image/jpeg">
+        <img src="{{ asset('images/kontakt.jpg') |tojpg }}" alt="{{ slide.alt }}" loading="lazy" class="w-full h-full object-fill">
+    </picture>
+</section>
+
+<section class="-mt-14 relative z-20">
+    <div class="container">
+        <div class="grid grid-cols-1 gap-3 mb-4 md:grid-cols-2">
+            <div class="shadow-circle bg-white text-center py-8">
+                {{ svg('pobocka', { class: 'h-16 w-16 mb-5 fill-black mx-auto' }) }}
+                <h2 class="font-bold mb-4 text-24">Naše pobočka</h2>
+                <h3 class="font-bold mb-3">Adresa:</h3>
+                <p class="mb-3">Korunní 1295/55, Praha 2</p>
+                <h3 class="font-bold mb-3">Otevírací doba</h3>
+                <p class="mb-3">
+                    Po - Pá: 10:00 - 17:00<br>
+                    So - Ne: Zavřeno
+                </p>
+                <h3 class="font-bold mb-3">Provozovatel</h3>
+                <p>
+                    PURE VISION s.r.o.<br>
+                    IČ: 06437125
+                </p>
+            </div>
+            <div class="shadow-circle bg-white text-center py-8">
+                {{ svg('podpora', { class: 'h-16 w-16 mb-5 fill-black mx-auto' }) }}
+                <h2 class="font-bold mb-4 text-24">Podpora</h2>
+                <p class="mb-3">
+                    Někdy je potřeba podat pomocnou ruku.<br>
+                    Neobávejte se, jsme tu pro Vás.
+                </p>
+                <p class="mb-4">
+                    Pokud potřebujete poradit s výběrem iPhone,<br>
+                    nebojte se zavolat.
+                    Kolega Honza Vám rád poradí<br>
+                    a pomůže i s vytvořením objednávky.
+                </p>
+                <a href="tel:+420704926926" class="mb-4 font-bold text-20 hover:underline">+420 704 926 926</a>
+            </div>
+        </div>
+        <div>
+            <iframe width="100%" height="500" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2560.5771664306912!2d14.444160515778242!3d50.07547992219283!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470b9394c21e40ad%3A0xdf7547a134242541!2zRG9zdHVwbnlpUGhvbmUuY3ogfCBaw6Fub3Zuw60gYSBwb3XFvml0w70gaVBob25l!5e0!3m2!1scs!2scz!4v1650489314272!5m2!1scs!2scz" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+        </div>
+        <div class="text-center my-16 cf7">
+            <h2 class="text-40 font-bold mb-1">Napište nám</h2>
+            <p class="text-primary mb-8">Máte otázku? Nenašli jste svou odpověď v často kladených otázkách? Využíjte, prosím, formulář níže.</p>
+            {% filter shortcodes %}
+                [contact-form-7 id="1831" title="Kontaktní formulář 1"]
+            {% endfilter %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

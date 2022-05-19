@@ -1,0 +1,81 @@
+{% extends "layouts/app.twig" %}
+
+{% block body %}
+
+{% include "partials/breadcrumbs.twig" %}
+
+<section class="section">
+    <div class="container">
+        <div class="mb-10 md:mb-16">
+            <h1 class="main-heading mb-3">Výkup nových a použitých zařízení</h1>
+            <p class="text-20">
+                Máte doma staré zařízení? My jej vykoupíme!<br><br>
+
+                Vykupujeme <strong>iPhone, iPad, MacBook, Apple Watch a Airpods</strong> za tu nejlepší možnou cenu.
+                Výkup je možné uskutečnit na naší prodejně a nebo online z pohodlí vašeho domova.
+            </p>
+        </div>
+        <div class="mb-10 flex flex-col md:justify-between md:flex-row">
+            <div class="basis-1/2 shrink-0 mb-10 order-2 md:order-1">
+                <h2 class="mb-3 font-bold text-24 md:text-32">Proč výkup zrovna u nás?</h2>
+                <ul class="text-20">
+                    <li class="my-5 flex items-center">
+                        {{ svg('nejvyssi_ceny', { class: 'h-12 w-12 fill-primary shrink-0 mr-6' }) }}
+                        <span>Nabízíme ty nejvyšší možné výkupní ceny</span>
+                    </li>
+                    <li class="my-5 flex items-center">
+                        {{ svg('hodnotu_vykupu', { class: 'h-12 w-12 fill-primary shrink-0 mr-6' }) }}
+                        <span>Hodnotu výkupu Vám vyplatíme na účet,
+                            v hotovosti nebo odečteme z nákupu</span>
+                    </li>
+                    <li class="my-5 flex items-center">
+                        {{ svg('cely_proces', { class: 'h-12 w-12 fill-primary shrink-0 mr-6' }) }}
+                        <span>Celý proces zabere maximálně 15 minut</span>
+                    </li>
+                    <li class="my-5 flex items-center">
+                        {{ svg('nevyzadujeme_doklad', { class: 'h-12 w-12 fill-primary shrink-0 mr-6' }) }}
+                        <span>Nevyžadujeme doklad o koupi, stačí Vám občanský průkaz</span>
+                    </li>
+                    <li class="my-5 flex items-center">
+                        {{ svg('firemni_zarizeni', { class: 'h-12 w-12 fill-primary shrink-0 mr-6' }) }}
+                        <span>Vykupujeme i firemní zařízení</span>
+                    </li>
+                </ul>
+            </div>
+            <picture class="order-1 md:order-2">
+                <source srcset="{{ asset('images/repurchase-hero.jpg')|towebp }}" type="image/webp">
+                <source srcset="{{ asset('images/repurchase-hero.jpg')|tojpg }}" type="image/jpg">
+                <img src="{{ asset('images/repurchase-hero.jpg') }}" alt="" loading="lazy"
+                    class="w-full max-w-[600px] md:max-h-min">
+            </picture>
+        </div>
+        <div>
+            <h2 class="mb-10 font-bold text-24 md:text-32">Jak výkup probíhá?</h2>
+            <div class="flex flex-col justify-between md:flex-row">
+                <div class="flex mb-5 items-center justify-center basis-[30%] md:mb-0 md:flex-col md:text-center">
+                    {{ svg('zarizeni', { class: 'h-12 w-12 mr-6 fill-primary shrink-0 md:w-24 md:h-24 md:mb-5 md:mr-0' }) }}
+                    <p class="text-20 md:text-16">
+                        Přineste své zařízení do naší prodejny
+                        nebo jej prodejte z pohodlí domova.
+                    </p>
+                </div>
+                <div class="flex mb-5 items-center justify-center basis-[30%] md:mb-0 md:flex-col md:text-center">
+                    {{ svg('stav', { class: 'h-12 w-12 mr-6 fill-primary shrink-0 md:w-24 md:h-24 md:mb-5 md:mr-0' }) }}
+                    <p class="text-20 md:text-16">
+                        Ohodnotíme jeho stav a nabídneme
+                        Vám tu nejlepší možnou cenu.
+                    </p>
+                </div>
+                <div class="flex mb-5 items-center justify-center basis-[30%] md:mb-0 md:flex-col md:text-center">
+                    {{ svg('penize', { class: 'h-12 w-12 mr-6 fill-primary shrink-0 md:w-24 md:h-24 md:mb-5 md:mr-0' }) }}
+                    <p class="text-20 md:text-16">
+                        Částku vyplatíme v hotovosti, na účet 
+                        nebo Vám snížíme cenu objednávky.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

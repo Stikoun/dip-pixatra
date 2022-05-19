@@ -1,0 +1,19 @@
+{% extends "layouts/app.twig" %}
+
+{% block body %}
+
+
+<section class="absolute w-3/4 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+    <div class="container">
+        <div class="text-center pb-3">
+            <a href="/">
+                <img src="{{ asset('images/logo.svg') }}" alt="Logo DostupnyiPhone.cz" class="mx-auto my-3 max-w-[250px]">
+            </a>
+            <h1 class="main-heading text-primary">404: Stránka nebyla nalezena</h1>
+            <p class="text-gray">Přejděte na hlavní stránku</p>
+            <a href="/" class="border-primary text-primary rounded-2xl border p-4 inline-block mt-5 hover:bg-primary hover:text-white">Zpět na hlavní stránku</a>
+        </div>
+</section>
+
+
+{% endblock %}

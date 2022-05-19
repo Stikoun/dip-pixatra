@@ -1,0 +1,26 @@
+{% extends 'layouts/app.twig' %}
+
+{% block body %}
+
+{% do action("woocommerce_account_content") %}
+
+
+{% do action("woocommerce_account_dashboard") %}
+
+
+
+{% do action("woocommerce_before_account_navigation") %}
+
+
+{% do action("woocommerce_account_navigation") %}
+
+
+{% do action("woocommerce_after_account_navigation") %}
+
+
+
+
+
+
+
+{% endblock %}

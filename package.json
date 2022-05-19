@@ -1,0 +1,35 @@
+{
+  "name": "dip",
+  "version": "1.0.0",
+  "description": "Custom Wordpress theme for DIP",
+  "main": "index.js",
+  "dependencies": {
+    "autoprefixer": "^10.4.2",
+    "laravel-mix": "^6.0.43",
+    "postcss": "^8.4.5",
+    "postcss-cli": "^9.1.0",
+    "postcss-import": "^14.0.2",
+    "postcss-import-url": "^7.0.0",
+    "swiper": "^8.0.2",
+    "tailwindcss": "^3.0.15"
+  },
+  "scripts": {
+    "build": "npx mix",
+    "watch": "npx mix watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Stikoun/dip.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Stikoun/dip/issues"
+  },
+  "homepage": "https://github.com/Stikoun/dip#readme",
+  "devDependencies": {
+    "browser-sync": "^2.27.7",
+    "browser-sync-webpack-plugin": "^2.3.0"
+  }
+}

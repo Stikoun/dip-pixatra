@@ -1,0 +1,144 @@
+{% extends "layouts/app.twig" %}
+
+{% block body %}
+
+{% include 'components/slider.twig' %}
+
+<section class="py-4 border-t border-grayDivider md:py-6">
+    <div class="container">
+        <div class="flex flex-wrap justify-between md:flex-nowrap">
+            {% for component in acf.components %}
+                {% for item in component.icons %}
+                    {% include 'components/iconBox.twig' with {
+                        title: item.title,
+                        subtitle: item.subtitle,
+                        icon: item.icon
+                    } %}    
+                {% endfor %}
+            {% endfor %}
+
+        </div>
+    </div>
+</section>
+
+<section class="py-4 bg-gray2 md:py-12">
+    <div class="container">
+        <div class="text-center">
+            {# {% include 'components/heading.twig' with {
+                heading: acf.configurator.heading,
+                subheading: acf.configurator.subheading,
+            } %}    #}
+            {# {% include "components/configurator.twig" %} #}
+            {% for component in acf.components %}
+                {% if component.acf_fc_layout == 'testimonials_text' %}
+                    {% include 'components/heading.twig' with {
+                        heading: component.heading,
+                        subheading: component.subheading,
+                    } %}    
+                    <p class="text-18 my-7">{{ component.text }}</p>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="mt-8">
+            <div class="elfsight-app-c9910cde-92d4-4a0f-8f24-cc5b502a7873"></div>
+        </div>
+
+        {# <div class="testimonials-slider">
+            <div class="swiper-wrapper">
+                {% for review in reviews %}
+                    {% include "components/testimonialCard.twig" with {
+                        author: review.author_title,
+                        image: review.author_image,
+                        content: review.review_text,
+                        date: review.review_timestamp
+                    } %}
+                {% endfor %}
+            </div>
+            <div class="swiper-pagination"></div>
+        </div> #}
+    </div>
+</section>
+
+<section class="pt-8 md:pt-16">
+    {% include 'templates/product-show.twig' with {
+        products: acf.product_list_discount.products,
+        heading: acf.product_list_discount.heading,
+        subheading: acf.product_list_discount.subheading,
+    } %}
+</section>
+
+<section class="pt-8 md:pt-16">
+    {% include 'templates/product-show.twig' with {
+        products: acf.product_list_bestseller.products,
+        heading: acf.product_list_bestseller.heading,
+        subheading: acf.product_list_bestseller.subheading,
+    } %}
+</section>
+
+
+
+
+<section class="gradient pb-4 border-b border-b-grayDivider md:pb-16">
+    {% include 'templates/product-show.twig' with {
+        products: acf.product_list_accessories.products,
+        heading: acf.product_list_accessories.heading,
+        subheading: acf.product_list_accessories.subheading,
+    } %}
+</section>
+
+
+{% for component in acf.components %}
+    {% if component.acf_fc_layout == 'section_about_us' %}
+    <section class="my-8 md:my-16">
+        <div class="container grid grid-cols-1 md:grid-cols-60/40">
+            <div class="mb-10 md:pr-20 md:mb-0">
+                {% include 'components/heading.twig' with {
+                    heading: component.left_column.heading,
+                    subheading: component.left_column.subheading,
+                } %} 
+                <div class="mt-12">
+                    <div class="flex flex-wrap justify-center items-center md:justify-start md:flex-nowrap md:mb-10">
+                        <picture class="w-1/2 md:w-1/3">
+                            <source srcset="{{ asset('images/logo-icon.png') |towebp }}" type="image/webp">
+                            <source srcset="{{ asset('images/logo-icon.png') }}" type="image/png">
+                            <img src="{{ asset('images/logo-icon.png') }}" alt="Logo DostupnyiPhone.cz" loading="lazy" class="w-[60%] mx-auto">
+                        </picture>
+                        <p class="p-7 md:w-2/3">{{ component.left_column.image_text}}</p>
+                    </div>
+                    <ul class="px-7 md:px-0">
+                        <li class="font-bold flex items-center mb-4">
+                            {{ svg('vsechny_produkty', { class: 'h-9 w-9 mr-3 fill-primary shrink-0' } ) }}
+                            <span>Všechny naše telefony jsou řádně testovány a plně funkční.</span>
+                        </li>
+                        <li class="font-bold flex items-center">
+                            {{ svg('zaruka', { class: 'h-9 w-9 mr-3 fill-primary shrink-0' } ) }}
+                            <span>Záruka dva roky na každý náš iPhone.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                {% include 'components/heading.twig' with {
+                    heading: component.right_column.heading,
+                    subheading: component.right_column.subheading,
+                } %}  
+                <div class="mt-12">
+                    {% for testimonial in component.right_column.testimonials %}
+                        {% include 'components/testimonialBox.twig' with {
+                            name: testimonial.post_title,
+                            content: testimonial.post_content,
+                            image: fn('get_the_post_thumbnail_url', testimonial.ID),
+                            image_alt: testimonial.post_title,
+                            id: testimonial.ID,
+                        } %}                  
+                    {% endfor %}
+                </div>  
+            </div>
+        </div>           
+    </section>
+    {% endif %}
+{% endfor %}  
+
+
+
+{% endblock %}

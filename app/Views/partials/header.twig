@@ -1,0 +1,215 @@
+<header class="sticky z-50 top-0 bg-white md:static">
+    <div class="bg-primary">
+        <div class="hidden container text-white text-base py-1 md:flex md:justify-between">
+            <a href="/varianty-nasich-zarizeni/" class="inline-flex items-center hover:underline">
+                {{ svg('varianty', { class: 'w-7 mr-1 mb-2 fill-white shrink-0 md:mb-0' }) }}  
+                <span>Varianty zařízení</span>
+            </a>
+            <a href="/casto-kladene-otazky/" class="inline-flex items-center hover:underline">
+                {{ svg('faq', { class: 'w-7 mr-1 mb-2 fill-white shrink-0 md:mb-0' }) }}  
+                <span>Často kladené otázky</span>
+            </a>
+            <a href="/prodejna" class="inline-flex items-center hover:underline">
+                {{ svg('prodejna', { class: 'w-7 mr-1 mb-2 fill-white shrink-0 md:mb-0' }) }}  
+                <span>Prodejna</span>
+            </a>
+            <a href="/kontakty/" class="inline-flex items-center hover:underline">
+                {{ svg('kontakt', { class: 'w-7 mr-1 mb-2 fill-white shrink-0 md:mb-0' }) }}  
+                <span>Kontakty</span>
+            </a>
+        </div>
+    </div>
+    <div class="container-max mx-auto relative py-4">
+        <div class="container flex items-center justify-between">
+            <div class="lg:hidden z-50" id="mobile-menu-opener">
+                <div class="p-2">
+                    {{ svg('hamburger', { class: 'fill-gray h-6 w-6' } ) }}
+                </div>
+            </div>
+
+            <a href="/" class="w-1/2 md:w-1/3 lg:w-1/5 3xl:w-[1/4%]">
+                <img src="{{ asset('images/logo.svg') }}" alt="Logo DostupnyiPhone.cz">
+            </a>
+            <div class="hidden lg:flex lg:items-center group">
+                <picture>
+                    <source srcset="{{ asset('images/avatar_call.jpg') |resize(100)|towebp }}" type="image/webp">
+                    <source srcset="{{ asset('images/avatar_call.jpg') |resize(100)|tojpg }}" type="image/jpeg">
+                    <img src="{{ asset('images/avatar_call.jpg') |resize(100)|tojpg }}" alt="Usmívající se zaměstnanec firmy DostupnyiPhone.cz." loading="lazy" class="rounded-full h-14 w-14 mr-5">
+                </picture>
+                <div class="hidden lg:flex lg:items-center">
+                    {{ svg('phone-call', { class: 'h-6 w-6 mr-2 group-hover:rotate-45 transition-all' } ) }}
+                    <div>
+                        <span class="block">Poradíme s výběrem</span>
+                        <a href="tel:+420704926926" class="group-hover:underline">
+                            +420 <span class="font-bold">704 926 926</span>
+                        </a>
+                        <span class="block text-14 text-gray">Po-Pá: 10 - 17 hod.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hidden lg:block w-[30%] 3xl:min-w-[450px]">
+                {% filter shortcodes %}
+                [fibosearch]
+                {% endfilter %}
+            </div>
+            <div class="hidden md:block">
+                <span class="relative group py-5">
+                    {{ svg('user', { class: 'inline-block h-6 w-6 fill-gray mr-1' } ) }}
+                    {% if current_user.ID != 0 %}
+                        <span>{{ current_user.display_name }}</span>   
+                    {% else %}
+                        <span class="align-middle">Můj účet</span>                        
+                    {% endif %}
+
+                    <div class="dropdown account group-hover:opacity-100 group-hover:left-0">
+                        <ul>
+                            {% for item in my_account.items %}
+                            <li class="{{ item.class }}">
+                                <a href="{{ item.url }}" class="py-1 flex">{{ item.name }}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </span>
+            </div>
+            {% if not fn('is_cart') %}
+            <div>
+                <div class="group py-5 px-3 lg:relative">
+                    {% if cart_count > 0 %}
+                    <span class="cart_count absolute bg-green top-3 right-3 rounded-full text-white w-5 h-5 text-center font-bold leading-5 lg:-right-1 lg:top-0">{{ cart_count }}</span>                   
+                    {% endif %}
+                    {{ svg('shopping-bag', { class: 'fill-gray h-6 w-6 ml-3' } ) }}
+                    <div class="dropdown cart group-hover:opacity-100 group-hover:left-0 w-full">
+                        <div class="widget_shopping_cart_content">
+                            {{fn('woocommerce_mini_cart')}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="border-y border-y-grayDivider relative hidden md:block" id="menu">
+        <div class="container">
+            <nav>              
+                <ul class="flex">
+                    {% for key, item in navigation.items %}
+                    <li class="{{ item.class }} font-bold text-18 flex-grow text-center group">
+                        <a href="{{ item.url }}" class="py-3 px-7 flex justify-center items-center hover:bg-darkGray hover:text-white">
+                            {% if key == 0 %}
+                                {{ svg('iphone', { class: 'h-8 w-8 mr-2 shrink-0 fill-transparent stroke-black group-hover:stroke-white' } ) }}
+                            {% elseif key == 1 %}
+                                {{ svg('ipad', { class: 'h-8 w-8 mr-2 shrink-0 group-hover:fill-white' } ) }}      
+                            {% elseif key == 2 %}
+                                {{ svg('applewatch', { class: 'h-8 w-8 mr-2 shrink-0 group-hover:fill-white' } ) }}  
+                            {% elseif key == 3 %}
+                                {{ svg('macbook', { class: 'h-8 w-8 mr-2 shrink-0 group-hover:fill-white' } ) }}  
+                            {% elseif key == 4 %}
+                                {{ svg('airpods', { class: 'h-8 w-8 mr-2 shrink-0 group-hover:fill-white' } ) }}                        
+                            {% endif %}
+                            <span>{{ item.name }}</span>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="overlay-wrapper"></div>
+    <div class="fixed left-0 flex flex-col top-0 w-0 overflow-hidden h-full z-50 bg-white" id="mobile-menu-wrapper">
+        <div class="flex items-center p-5">
+            <picture class="shrink-0">
+                <source srcset="{{ asset('images/avatar_call.jpg') |resize(100)|towebp }}" type="image/webp">
+                <source srcset="{{ asset('images/avatar_call.jpg') |resize(100)|tojpg }}" type="image/jpeg">
+                <img src="{{ asset('images/avatar_call.jpg') |resize(100)|tojpg }}" alt="Usmívající se zaměstnanec firmy DostupnyiPhone.cz." class="rounded-full h-14 w-14 mr-5">
+            </picture>
+            <div class="flex items-center shrink-0">
+                {{ svg('phone-call', { class: 'h-6 w-6 mr-2 shrink-0' } ) }}
+                <div class="shrink-0">
+                    <span class="block">Poradíme s výběrem</span>
+                    <a href="tel:+420704926926">
+                        +420 <span class="font-bold">704 926 926</span>
+                    </a>
+                    <span class="block text-14 text-gray">Po-Pá: 10 - 17 hod.</span>
+                </div>
+            </div>
+        </div>
+        <div>
+            {% filter shortcodes %}
+            [fibosearch]
+            {% endfilter %}
+        </div>
+        <nav class="flex flex-col flex-1">              
+            <ul class="flex flex-col mb-8">
+                {% for key, item in navigation.items %}
+                <li class="{{ item.class }} font-bold text-18 flex-grow group">
+                    <a href="{{ item.url }}" class="py-2 px-7 flex items-center hover:bg-darkGray hover:text-white">
+                        {% if key == 0 %}
+                            {{ svg('iphone', { class: 'h-8 w-8 mr-2 shrink-0 fill-transparent stroke-black group-hover:stroke-white' } ) }}
+                        {% elseif key == 1 %}
+                            {{ svg('ipad', { class: 'h-8 w-8 mr-2 shrink-0 group-hover:fill-white' } ) }}      
+                        {% elseif key == 2 %}
+                            {{ svg('applewatch', { class: 'h-8 w-8 shrink-0 mr-2 group-hover:fill-white' } ) }}  
+                        {% elseif key == 3 %}
+                            {{ svg('macbook', { class: 'h-8 w-8 shrink-0 mr-2 group-hover:fill-white' } ) }}  
+                        {% elseif key == 4 %}
+                            {{ svg('airpods', { class: 'h-8 w-8 shrink-0 mr-2 group-hover:fill-white' } ) }}                        
+                        {% endif %}
+                        <span class="shrink-0">{{ item.name }}</span>
+                    </a>
+                </li>
+                {% endfor %}
+                <li class="font-bold text-18 flex-grow group mt-3">
+                    <a href="/muj-ucet" class="py-2 px-7 flex items-center hover:bg-darkGray hover:text-white">
+                        {{ svg('user', { class: 'h-8 w-8 shrink-0 mr-2 group-hover:fill-white' } ) }}
+                        {% if current_user.ID != 0 %}
+                            <span class="shrink-0">{{ current_user.display_name }}</span>   
+                        {% else %}
+                            <span class="shrink-0 align-middle">Můj účet</span>                        
+                        {% endif %}
+                    </a>
+                </li>
+            </ul>
+            <ul class="flex flex-col flex-1 bg-primary">
+                <li class="text-18 text-white group">
+                    <a href="/varianty-nasich-zarizeni/" class="py-2 px-7 flex items-center hover:bg-darkGray hover:text-white">
+                        {{ svg('varianty', { class: 'h-8 w-8 shrink-0 mr-2 fill-white' } ) }}
+                        <span class="shrink-0">Varianty zařízení</span>
+                    </a>
+                </li>
+                <li class="text-18 text-white group">
+                    <a href="/casto-kladene-otazky/" class="py-2 px-7 flex items-center hover:bg-darkGray hover:text-white">
+                        {{ svg('faq', { class: 'h-8 w-8 shrink-0 mr-2 fill-white' } ) }}
+                        <span class="shrink-0">Často kladené otázky</span>
+                    </a>
+                </li>
+                <li class="text-18 text-white group">
+                    <a href="/prodejna/" class="py-2 px-7 flex items-center hover:bg-darkGray hover:text-white">
+                        {{ svg('prodejna', { class: 'h-8 w-8 shrink-0 mr-2 fill-white' } ) }}
+                        <span class="shrink-0">Prodejna</span>
+                    </a>
+                </li>
+                <li class="text-18 text-white group">
+                    <a href="/kontakty/" class="py-2 px-7 flex items-center hover:bg-darkGray hover:text-white">
+                        {{ svg('kontakt', { class: 'h-8 w-8 shrink-0 mr-2 fill-white' } ) }}
+                        <span class="shrink-0">Kontakty</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<script>
+    jQuery('#mobile-menu-opener').on('click', function() {
+        jQuery('#mobile-menu-wrapper').addClass('active');
+        jQuery('header .overlay-wrapper').css('display', 'block');
+    })
+
+    jQuery('header .overlay-wrapper').on('click', function() {
+        jQuery('#mobile-menu-wrapper').removeClass('active');
+        jQuery(this).css('display', 'none');
+    })
+
+
+</script>

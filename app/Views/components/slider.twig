@@ -1,0 +1,31 @@
+<div class="main-slider relative overflow-hidden">
+    <div class="swiper-wrapper">
+        {% for slide in acf.slider %}
+        <a href="{{ slide.link }}" class="swiper-slide">
+            <picture>
+                <source media="(max-width: 768px)" srcset="{{ slide.image_mobile.url |towebp }}" type="image/webp">
+                <source media="(min-width: 769px)" srcset="{{ slide.image.url |towebp }}" type="image/webp">
+                <source media="(max-width: 768px)" srcset="{{ slide.image_mobile.url |tojpg }}" type="image/jpeg">
+                <source media="(min-width: 769px)" srcset="{{ slide.image.url |tojpg }}" type="image/jpeg">
+                <img src="{{ slide.image.url |tojpg }}" alt="{{ slide.image.alt }}" class="w-full">
+            </picture>   
+        </a>         
+        {% endfor %}
+    </div>
+    <div class="btn-prev-slide">
+        {{ svg('up-arrow', { class: 'inline-block h-3 w-3 md:h-4 md:w-4' }) }} 
+    </div>
+    <div class="btn-next-slide">
+        {{ svg('up-arrow', { class: 'inline-block h-3 w-3 md:h-4 md:w-4' }) }} 
+    </div>
+</div>
+
+<style>
+    .main-slider .swiper-slide:not(.swiper-slide-active) img {
+        display:none;
+    }
+/* 
+    .main-slider:not(.swiper-initialized) .swiper-slide {
+        display: none;
+    } */
+</style>

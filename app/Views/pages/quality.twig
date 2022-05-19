@@ -1,0 +1,86 @@
+{% extends "layouts/app.twig" %}
+
+{% block body %}
+
+{% include "partials/breadcrumbs.twig" %}
+
+<section class="section">
+    <div class="container">
+        <div class="mb-10 md:flex md:justify-between"> 
+            <div class="basis-1/2 shrink-0 mb-10">
+                <h1 class="main-heading mb-3">Garance<br> kvality</h1>
+                <p class="text-primary text-20 font-bold">Jak je to se zárukou na zakoupené telefony<br> a s jejich opravou?</p>
+            </div>
+            <picture class="extended-column">
+                <source srcset="{{ asset('images/garance-kvality-hero.png')|towebp }}" type="image/webp">
+                <source srcset="{{ asset('images/garance-kvality-hero.png') }}" type="image/png">
+                <img src="{{ asset('images/garance-kvality-hero.png') }}" alt="{{ slide.alt }}" loading="lazy" class="w-full max-h-[200px] max-w-[960px] md:max-h-min">
+            </picture>
+        </div>
+        <div class="md:flex md:justify-between">
+            <div class="basis-[48%] shrink-0 mb-10">
+                <h3 class="text-24 font-bold mb-3">Záruka u zánovích telefonů</h3>
+                <p>
+                    Záruka je na zánovní telefon vždy 2 roky. Záruku v tomto případě 
+                    na zakoupený mobil zajišťuje přiložený záruční list, jehož datum ještě
+                    nevypršelo, ale nijak dlouhou dobu ani nepokročilo, nebo 
+                    k zakoupenému modelu obdržíte nový záruční list na 2 roky přímo 
+                    od nás. Případné budoucí záruční plnění pak za Vás budeme řešit my.
+                </p>
+            </div>
+            <div class="basis-[48%] shrink-0 mb-10">
+                <h3 class="text-24 font-bold mb-3">Záruka u použitých telefonů</h3>
+                <p>
+                    Všechny použité telefony jsou řádně testovány a je na ně 
+                    poskytována záruka na skryté vady v délce trvání 2 roky. 
+                    Na tyto telefony se také vztahuje doživotní záruka na původ zařízení.
+                </p>
+            </div>
+        </div>
+        <div class="md:flex md:justify-between">
+            <div class="basis-[48%] shrink-0 mb-10">
+                <h3 class="text-24 font-bold mb-3">Záruční opravy</h3>
+                <p>
+                    Jako jediní v Praze Vám vyřešíme záruční výměny doslova na počkání. 
+                    Uděláme to rovnou výměnou kus za kus. Nečeká Vás žádné čekání 
+                    ani nesmyslné posuzování závady. Stačí přijít, ukázat nám vadu přístroje 
+                    a vadný díl Vám na počkání vyměníme.<br><br>
+                    
+                    V Praze jsme pro Vás připravili rozšíření našich služeb o pozáruční 
+                    i záruční servis mobilních telefonů iPhone, tabletů iPad, notebooků 
+                    MacBook a dalších zařízení značky Apple. iPhone Servis OpravimeiPhone 
+                    Praha je tu pro Vás.<br><br>
+                    
+                    Náš sortiment disponuje velkým množstvím náhradních dílů pro značku 
+                    Apple. Pro tvůj přístroj nabízíme komplexní servis počínaje jednoduchou 
+                    výměnou dotykové plochy nebo baterie, ale rádi ti taky provedeme
+                     i složitější opravu, jako např. opravy základních desek. Provádíme tedy 
+                    všechny úrovně servisu, od jednoduchých mechanických oprav 
+                    až po velmi složité pájené opravy.
+                </p>
+            </div>
+            <div class="mb-10 md:basis-[48%] md:flex md:flex-col md:justify-between md:shrink-0">
+                <div class="mb-10 md:mb-0">
+                    <h3 class="text-24 font-bold mb-3">Pozáruční opravy</h3>
+                    <p>
+                        I při pozáruční opravě zařízení Apple máte v našem servisu 100% garanci 
+                        kvality práce a použitých náhradních dílů. iPhone a další zařízení můžete 
+                        zanechat k opravě na naší pobočce, nebo jej můžete případně zaslat 
+                        poštou na pobočku na Praze 8.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-24 font-bold mb-3">Mechanické poškození zařízení, které je ještě v záruce?</h3>
+                    <p>
+                        Nevadí, pokud si necháte iPhone opravit u nás, záruka Vám bude stále 
+                        platit, a to za nezměněných podmínek. Zároveň budete mít 24 měsíců 
+                        záruky na nový displej / housing, nebo jiný měněný díl.
+                    </p>
+                </div>
+            </div>            
+        </div>
+        {# {{ post.content }} #}
+    </div>
+</section>
+
+{% endblock %}

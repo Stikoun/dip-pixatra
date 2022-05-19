@@ -1,0 +1,12 @@
+<div class="flex basis-1/2 items-center md:basis-auto">
+    <div class="inline-block relative m-2 w-12 h-12 shrink-0 md:w-20 md:h-20 ">
+        <picture>
+            <source srcset="{{ icon.url|resize(150)|towebp }}" type="image/webp">
+            <source srcset="{{ icon.url|resize(150)|tojpg }}" type="image/jpeg">
+            <img src="{{ icon.url|resize(150)|tojpg }}" alt="{{ icon.alt }}" loading="lazy" class="w-full">
+        </picture>
+    </div>
+    <div class="ml-2 mb-2 md:mb-0">
+        <h3 class="text-primary leading-tight text-18 font-bold">{{title}}</h3>
+    </div>
+</div>

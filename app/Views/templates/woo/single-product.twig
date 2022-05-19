@@ -1,0 +1,87 @@
+{% extends 'layouts/app.twig' %}
+
+{% block body %}
+
+<section class="bg-gray2">
+    <div class="container text-gray3 py-5">
+        {{ breadcrumbs() }}      
+    </div>
+</section>
+
+
+{{ fn('the_post') }}  
+
+
+<section class="mt-16 pb-14">
+    <div class="container">
+        {% do action("woocommerce_before_single_product") %}
+        <div class="grid grid-cols-1 gap-12 md:gap-24 md:grid-cols-2">
+            <div>
+                <div class="product-slideshow">
+                    <div class="swiper-wrapper">
+                        {% for image_id in product.get_gallery_image_ids %}
+                        <div class="swiper-slide">
+                            <div class="relative h-[250px] md:h-[400px]">
+                                <picture>
+                                    <source srcset="{{ fn('wp_get_attachment_url', image_id) |towebp }}" type="image/webp">
+                                    <source srcset="{{ fn('wp_get_attachment_url', image_id) |tojpg }}" type="image/jpeg">
+                                    <img src="{{ fn('wp_get_attachment_url', image_id) |tojpg }}" alt="{{ slide.alt }}" loading="lazy" class="w-auto h-full mx-auto">
+                                </picture>
+                                <div class="absolute bottom-[105%] text-center w-full">
+                                    <div class="bg-gray text-white font-bold py-1 px-6 rounded-md">Tento produkt si za poslední měsíc koupilo 5 zákazníků</div>
+                                </div>
+                                {# <div class="absolute top-0 right-full">
+                                    {% for icons in options.icons %}
+                                    <div class="mb-4">
+                                        <div class="border-4 border-primary rounded-full w-20 h-20 shrink-0">
+                                            <img src="{{ icons.icon.url }}" alt="{{ icons.icon.alt }}" loading="lazy" class="p-3">
+                                        </div>   
+                                        <h3 class="font-bold text-center">{{ icons.text }}</h3> 
+                                    </div>                              
+                                    {% endfor %}
+                                </div> #}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="product-thumbs-slideshow overflow-hidden my-8">
+                    <div class="swiper-wrapper">
+                        {% for image_id in product.get_gallery_image_ids %}
+                        <div class="swiper-slide">
+                            <picture>
+                                <source srcset="{{ fn('wp_get_attachment_url', image_id) |towebp }}" type="image/webp">
+                                <source srcset="{{ fn('wp_get_attachment_url', image_id) |tojpg }}" type="image/jpeg">
+                                <img src="{{ fn('wp_get_attachment_url', image_id) |tojpg }}" alt="{{ slide.alt }}" loading="lazy" class="w-auto h-full mx-auto">
+                            </picture>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div>
+                    {% for icons in options.icons %}
+                    <div class="flex items-center mb-4">
+                        <div class="border-4 border-primary rounded-full w-20 h-20 shrink-0">
+                            <img src="{{ icons.icon.url }}" alt="{{ icons.icon.alt }}" loading="lazy" class="p-3">
+                        </div>   
+                        <h3 class="font-bold text-center text-20 ml-3">{{ icons.text }}</h3> 
+                    </div>                              
+                    {% endfor %}
+                </div>
+            </div>  
+            <div>
+                <div>
+                    {% do action("woocommerce_single_product_summary") %}
+                </div>
+            </div>  
+        </div>
+    </div>    
+</section>
+          
+{% do action("woocommerce_template_single_add_to_cart") %}
+
+
+{% do action("woocommerce_after_single_product") %}
+
+
+{% endblock  %}

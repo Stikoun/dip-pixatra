@@ -1,0 +1,505 @@
+{% extends 'layouts/app.twig' %}
+
+{% block body %}
+
+{{ fn('the_post') }}  
+
+{% include "partials/variationsPopup.twig" %}
+
+<section class="bg-gray2">
+    <div class="container text-gray3 py-2">
+        {{ breadcrumbs() }}      
+    </div>
+</section>
+
+{% do action("woocommerce_before_single_product") %}
+
+<section class="mt-2 pb-4 md:pb-6 md:mt-6">
+    <div class="container">
+        <div class="grid grid-cols-1 md:gap-24 md:grid-cols-2">
+            <div>
+                <h1 class="block font-bold text-24 leading-10 md:hidden">{{ product.name }}</h1>
+                <div class="product-slideshow">
+                    <div class="swiper-wrapper">
+                        {% if product.get_image_id %}
+                        <div class="swiper-slide">
+                            <div class="relative h-[250px] md:h-[400px]">
+                                <picture>
+                                    <source srcset="{{ fn('wp_get_attachment_url', product.get_image_id) |towebp }}" type="image/webp">
+                                    <source srcset="{{ fn('wp_get_attachment_url', product.get_image_id) |tojpg }}" type="image/jpeg">
+                                    <img src="{{ fn('wp_get_attachment_url', product.get_image_id) |tojpg }}" alt="{{ slide.alt }}" loading="lazy" class="w-auto !h-full mx-auto">
+                                </picture>
+                                {# <div class="absolute bottom-[105%] text-center w-full">
+                                    <div class="bg-gray text-white font-bold py-1 px-6 rounded-md">Tento produkt si za poslední měsíc koupilo 5 zákazníků</div>
+                                </div> #}
+                                {# <div class="absolute top-0 right-full">
+                                    {% for icons in options.icons %}
+                                    <div class="mb-4">
+                                        <div class="border-4 border-primary rounded-full w-20 h-20 shrink-0">
+                                            <img src="{{ icons.icon.url }}" alt="{{ icons.icon.alt }}" loading="lazy" class="p-3">
+                                        </div>   
+                                        <h3 class="font-bold text-center">{{ icons.text }}</h3> 
+                                    </div>                              
+                                    {% endfor %}
+                                </div> #}
+                            </div>
+                        </div> 
+                        {% endif %} 
+                        {% for image_id in product.get_gallery_image_ids %}
+                        <div class="swiper-slide">
+                            <div class="relative h-[250px] md:h-[400px]">
+                                <picture>
+                                    <source srcset="{{ fn('wp_get_attachment_url', image_id) |towebp }}" type="image/webp">
+                                    <source srcset="{{ fn('wp_get_attachment_url', image_id) |tojpg }}" type="image/jpeg">
+                                    <img src="{{ fn('wp_get_attachment_url', image_id) |tojpg }}" alt="{{ slide.alt }}" loading="lazy" class="w-auto !h-full mx-auto">
+                                </picture>
+                                {# <div class="absolute bottom-[105%] text-center w-full">
+                                    <div class="bg-gray text-white font-bold py-1 px-6 rounded-md">Tento produkt si za poslední měsíc koupilo 5 zákazníků</div>
+                                </div> #}
+                                {# <div class="absolute top-0 right-full">
+                                    {% for icons in options.icons %}
+                                    <div class="mb-4">
+                                        <div class="border-4 border-primary rounded-full w-20 h-20 shrink-0">
+                                            <img src="{{ icons.icon.url }}" alt="{{ icons.icon.alt }}" loading="lazy" class="p-3">
+                                        </div>   
+                                        <h3 class="font-bold text-center">{{ icons.text }}</h3> 
+                                    </div>                              
+                                    {% endfor %}
+                                </div> #}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="product-thumbs-slideshow overflow-hidden my-8">
+                    <div class="swiper-wrapper">
+                        {% if product.get_image_id %}
+                        <div class="swiper-slide">
+                            <picture>
+                                <source srcset="{{ fn('wp_get_attachment_url', product.get_image_id) |towebp }}" type="image/webp">
+                                <source srcset="{{ fn('wp_get_attachment_url', product.get_image_id) |tojpg }}" type="image/jpeg">
+                                <img src="{{ fn('wp_get_attachment_url', product.get_image_id) |tojpg }}" alt="{{ slide.alt }}" loading="lazy" class="w-auto !h-full mx-auto">
+                            </picture>
+                        </div>
+                        {% endif %}
+                        {% for image_id in product.get_gallery_image_ids %}
+                        <div class="swiper-slide">
+                            <picture>
+                                <source srcset="{{ fn('wp_get_attachment_url', image_id) |towebp }}" type="image/webp">
+                                <source srcset="{{ fn('wp_get_attachment_url', image_id) |tojpg }}" type="image/jpeg">
+                                <img src="{{ fn('wp_get_attachment_url', image_id) |tojpg }}" alt="{{ slide.alt }}" loading="lazy" class="w-auto !h-full mx-auto">
+                            </picture>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>  
+            <div>
+                <div>
+                    <h1 class="hidden font-bold text-32 mb-7 leading-10 md:block">{{ product.name }}</h1>
+                    <div class="variations-info mb-7">
+                        {% for variation in options.variations %}
+                        <div class="{{ variation.id }}">
+                            <div class="flex items-center justify-between">
+                                {% for item in variation.icons %}
+                                <div class="basis-[30%] flex items-center">
+                                    <img src="{{ item.icon.url }}" alt="" class="w-14 md:mr-2">
+                                    <span class="text-12 font-bold leading-tight md:text-16">{{ item.text }}</span>    
+                                </div>
+                                {% endfor %}
+                            </div>
+                                {{ variation.description|wpautop }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {# <div class="mb-5">
+                        <div><span class="font-bold">Barva: </span>{{ product.get_attribute('pa_barva') }}</div>
+                        <div><span class="font-bold">Paměť: </span>{{ product.get_attribute('pa_kapacita') }}</div>
+                        <div><span class="font-bold">Kapacita baterie: </span>bílo-stříbrná</div>
+                    </div> #}
+                    {{fn('woocommerce_template_single_add_to_cart')}}
+                    {% if additional_products %}
+                        <div id="additional-products">
+                            {% for item in additional_products %}
+                                {% set product_additional = fn('wc_get_product', item.product[0].ID) %}
+                                <div class="flex justify-between mb-2">
+                                    <div class="inline-flex items-center">
+                                        <label class="inline-flex items-center">
+                                            <input type="checkbox" class="border-gray-300 focus:ring-primary checked:bg-primary checked:focus:bg-primary" value="{{ product_additional.id }}">
+                                            <span class="ml-2">{{ product_additional.name }}</span>
+                                        </label>
+                                        <div class="relative group">
+                                            {{ svg('question', { class: 'fill-gray h-3 w-3 mx-2' }) }}
+                                             <div class="hidden absolute shadow-circle w-[250px] bg-white p-3 left-1/2 text-center bottom-full -translate-x-1/2 z-10 group-hover:block">
+                                                {{ item.description }}
+                                            </div>
+                                        </div>
+
+                                    </div>                
+                                    <span class="text-green font-bold">{{fn('wc_price', product_additional.price)}}</span>
+                                </div>                            
+                            {% endfor %}
+                        </div>                   
+                    {% endif %}
+                    <div class="text-center my-7">
+                        <p class="text-14 mb-3 text-gray">
+                            Zboží prodáváno dle § 90
+                            Plnění osvobozeno od DPH
+                        </p>
+                        <div class="flex justify-center">
+                            {# <a href="#" class="mr-5 flex items-center">
+                                {{ svg('heart', { class: 'fill-red h-5 w-5 mr-2' }) }}
+                                <span>Do oblíbených</span>
+                            </a> #}
+                            <a href="" class="flex items-center">
+                                {{ svg('scale', { class: 'fill-black h-5 w-5 mr-2' }) }}
+                                <span>Získávat upozornění pro tento produkt</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+        </div>
+    </div>    
+</section>
+
+<section>
+    <div class="container tabs">
+        <ul class="tabs__list">
+            <li data-target="description">
+                <span>Popis</span>
+            </li>
+            <li data-target="variations">
+                <span>Varianty našich zařízení</span>
+            </li>
+            <li data-target="parameters">
+                <span>Parametry</span>
+            </li>
+            <li data-target="accessories">
+                <span>Příslušenství</span>
+            </li>
+            <li  data-target="service">
+                <span>Servis</span>
+            </li>
+        </ul>
+        <div class="tabs__content">
+            <div id="description" class="active shrinked editor-content">
+                {{ product.description|wpautop }}
+            </div>
+            <button type="button" id="show-more">TEST</button>
+            <div id="variations">
+                {% include "partials/variations.twig" %}
+            </div>
+            <div id="parameters">
+                <table class="w-full border-b border-grayDivider">
+                    <thead>
+                        <th class="text-24 text-left pb-3">Parametry</th>
+                    </thead>
+                    <tbody>
+                        {% for attribute in attributes %}
+                        <tr class="border-t border-grayDivider">
+                            <td class="p-3 font-bold border-r border-grayDivider w-1/2 md:w-1/3">{{ attribute.attribute_label }}</td>
+                            <td class="p-3">{{ attribute.attribute_value }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div id="accessories">
+                <div class="flex flex-wrap">
+                {% for product in accessories %}
+                    {% include 'components/productCard.twig' with {
+                        ID: product.ID
+                    }%}      
+                {% endfor %}
+                </div>
+            </div>
+            <div id="service">
+                <table class="mb-4 border-b border-grayDivider">
+                    <thead>
+                        <th class="text-24 text-left pb-3">Ceník oprav</th>
+                    </thead>
+                    <tbody>
+                        {% for item in service %}
+                        <tr class="border-t border-grayDivider">
+                            <td class="p-3 font-bold border-r border-grayDivider w-1/2">
+                                {{ item.name }}
+                                {% if item.discount %}
+                                <span class="font-bold text-red text-14">AKCE</span>
+                                {% endif %}
+                            </td>
+                            <td class="p-3 border-r border-grayDivider {{ item.discount ? 'text-red font-bold' : '' }}">{{ item.price }}</td>
+                            <td class="p-3">{{ item.time }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <a href="https://www.opravimeiphone.cz/cs/cenik/" target="_blank" class="font-bold underline">Ceník všech oprav naleznete ZDE.</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# <section class="gradient pb-20 border-b border-grayDivider">
+    <div class="container">
+        <div class="flex mt-[-90px]">
+            <div class="basis-2/3 flex-shrink-0 border-r border-grayDivider pr-[5%] pt-[90px] dynamic-content">
+                <p>
+                    {{ product.description|wpautop }}
+                </p>
+            </div>
+            <div class="pl-[5%] pt-[90px]">
+                <h2 class="font-bold text-24 mb-8">Parametry</h2>
+                <ul>
+                {% for label, value in attributes %}
+                    <li class="mb-2">
+                        <span class="font-bold">{{ label }}:</span>
+                        {{ value }}
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
+        </div>
+</section> #}
+
+
+<script> 
+    const tabs_items = document.querySelectorAll('.tabs__list li');
+
+    tabs_items.forEach( function (element) {
+        element.addEventListener('click', function () {
+            
+            tabs_items.forEach( function (el) {
+                el.classList.remove('active');
+            })
+
+            clicked_target = this.getAttribute('data-target');
+            this.classList.add('active');
+
+            document.querySelectorAll('.tabs__content > div').forEach( function (target) {
+                if (clicked_target == target.getAttribute('id')) {
+                    if (!target.classList.contains('active')) {
+                        target.classList.add('active');
+                    }
+                }
+                else {
+                        target.classList.remove('active');
+                }
+            })
+        })
+    })
+</script>
+
+
+<script type="text/javascript" >
+    var ajaxurl = '{{ fn( 'admin_url', 'admin-ajax.php' ) }}';
+
+    jQuery(function() {
+        jQuery("#additional-products").prependTo(".single_variation_wrap");
+    })
+
+    jQuery(".btn-buy").click(function(event) {
+
+        let variationId = jQuery("input[name='variation_id']").val();
+
+        if (variationId == 0) {
+            alert("Zvolte variantu produktu");
+        }
+        else {
+            let addToCartBtnValue = variationId;
+            let checkedCheckboxes = [];
+
+            jQuery("#additional-products input[type=checkbox]:checked").each(function(){
+                checkedCheckboxes.push(jQuery(this).val());
+            });
+
+            jQuery.ajax({
+                type: 'POST',
+                url: ajaxurl,
+                data: {
+                    'action'   : 'ajax_add_additional_products', 
+                    'additional_products_ids': checkedCheckboxes,
+                    'main_product_id': addToCartBtnValue
+                },
+                success: function( response ) {
+                    top.location.replace(response);
+                },
+            });
+        }
+    });
+
+    // jQuery('form.cart').one('submit', function(event) {
+    //     event.preventDefault();
+
+    //     let addToCartBtnValue = jQuery('.single_add_to_cart_button').val();
+    //     let checkedCheckboxes = [];
+
+    //     jQuery("#additional-products input[type=checkbox]:checked").each(function(){
+    //         checkedCheckboxes.push(jQuery(this).val());
+    //     });
+
+    //     jQuery.ajax({
+    //         type: 'POST',
+    //         url: ajaxurl,
+    //         data: {
+    //             'action'   : 'ajax_add_additional_products', 
+    //             'additional_products_ids': checkedCheckboxes,
+    //             'main_product_id': addToCartBtnValue
+    //         },
+    //         success: function( response ) {
+    //             console.log("pridano");
+    //         },
+    //     });
+
+    //     jQuery(this).submit();
+    // });
+</script>
+
+
+<script type="text/javascript">
+
+jQuery(function($){
+
+    const variations = {{ fn('json_encode', variations) }};
+
+    // clones select options for each product attribute
+    var clone = $(".single-product .variations select").clone(true,true);
+
+    // adds a "data-parent-id" attribute to each select option
+    $(".single-product .variations select option").each(function(){
+        $(this).attr('data-parent-id',$(this).parent().attr('id'));
+    });
+
+    // converts select options to div
+    $(".single-product .variations select option").unwrap().each(function(){
+        if ( $(this).val() == '' ) {
+            $(this).remove();
+            return true;
+        }
+
+        var option = $('<div class="custom_option is-visible" data-parent-id="'+$(this).data('parent-id')+'" data-value="'+$(this).val()+'">'+$(this).text()+'</div>');
+        $(this).replaceWith(option);
+
+        const inputValue = $(this).val();
+
+        jQuery.each(variations, function(key, value) {
+
+            if (inputValue == key) {
+                jQuery('.variation-wrapper .custom_option[data-value="'+inputValue+'"]').append('<div class="text-14 font-light">'+value+'</div>');
+            }
+        })
+    });
+    
+    // reinsert the clone of the select options of the attributes in the page that were removed by "unwrap()"
+    $(clone).insertBefore('.single-product .variations .reset_variations').hide();
+
+    // when a user clicks on a div it adds the "selected" attribute to the respective select option
+    $(document).on('click', '.custom_option', function(){
+        var parentID = $(this).data('parent-id');
+        if ( $(this).hasClass('on') ) {
+            $(this).removeClass('on');
+            $(".single-product .variations select#"+parentID).val('').trigger("change");
+        } else {
+            $('.custom_option[data-parent-id='+parentID+']').removeClass('on');
+            $(this).addClass('on');
+            $(".single-product .variations select#"+parentID).val($(this).data("value")).trigger("change");
+        }
+        
+    });
+
+    // if a select option is already selected, it adds the "on" attribute to the respective div
+    $(".single-product .variations select").each(function(){
+        if ( $(this).find("option:selected").val() ) {
+            var id = $(this).attr('id');
+            $('.custom_option[data-parent-id='+id+']').removeClass('on');
+            var value = $(this).find("option:selected").val();
+            $('.custom_option[data-parent-id='+id+'][data-value='+value+']').addClass('on');
+        }
+    });
+
+    // when the select options change based on the ones selected, it shows or hides the respective divs
+    $('body').on('check_variations', function(){
+        $('div.custom_option').removeClass('is-visible');
+        $('.single-product .variations select').each(function(){
+            var attrID = $(this).attr("id");
+            $(this).find('option').each(function(){
+                if ( $(this).val() == '' ) {
+                    return;
+                }
+                $('div[data-parent-id="'+attrID+'"][data-value="'+$(this).val()+'"]').addClass('is-visible');
+            });
+        });
+    });
+
+    $(".variations").show();
+});
+
+</script>
+
+<script>
+    let openClick = 0;
+    
+    jQuery(function() {
+        const active_tab = jQuery('.variation-wrapper .custom_option.on').attr('data-value');
+
+        jQuery('.variations-info > div').each(function() {
+            if (jQuery(this).attr('class') == active_tab)
+                jQuery(this).addClass('on');
+        })
+
+        jQuery('.variation-wrapper .custom_option').on('click', function() { 
+                jQuery('.variations-info > div').css('display', 'none');
+
+                const attr = jQuery(this).attr('data-value');
+                console.log(attr);
+                jQuery('.'+attr).css('display', 'block');
+        })
+
+        jQuery('#variationPopupOpen').click(function(event) {
+            if (openClick == 0) {
+                jQuery('.variation-wrapper').clone().prependTo('.popup .targetWrapper');
+            }
+            openClick = 1;
+
+            jQuery('.variation-wrapper .custom_option').on('click', function() { 
+                jQuery('.variations-info > div').css('display', 'none');
+
+                const attr = jQuery(this).attr('data-value');
+                console.log(attr);
+                jQuery('.'+attr).css('display', 'block');
+            })
+
+            jQuery('.popup').css('display', 'block');
+
+        })
+
+        jQuery('#variationPopupClose').click(function(event) {
+            const active_tab = jQuery('.variation-wrapper .custom_option.on').attr('data-value');
+
+            jQuery('.variation-wrapper .custom_option').each(function() {
+                if (jQuery(this).attr('data-value') == active_tab) {
+                    jQuery(this).addClass('on');
+                }
+            })
+
+            jQuery('.popup').css('display', 'none');
+        })
+    })
+
+
+</script>
+
+<script>
+    jQuery(function() {
+        jQuery("#show-more").on('click', function() {
+            if (jQuery("#description").hasClass('shrinked')) {
+                jQuery("#description").removeClass('shrinked');       
+            }
+            else {
+                jQuery("#description").addClass('shrinked');
+            }
+        })
+    })
+</script>
+
+{% endblock %}

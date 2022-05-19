@@ -1,0 +1,14 @@
+{% extends 'layouts/app.twig' %}
+
+{% block body %}
+
+{% include "partials/breadcrumbs.twig" %}
+
+<div class="container">
+    {% filter shortcodes %}
+        [woocommerce_checkout]
+    {% endfilter %}
+</div>
+
+
+{% endblock %}

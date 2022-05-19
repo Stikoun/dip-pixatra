@@ -1,0 +1,123 @@
+<section>
+    <div class="container tabs">
+        <ul class="tabs__list">
+            <li data-target="description" class="active">
+                <span>Popis</span>
+            </li>
+            <li data-target="variations">
+                <span>Varianty zařízení</span>
+            </li>
+            <li data-target="parameters">
+                <span>Parametry</span>
+            </li>
+            <li data-target="accessories">
+                <span>Příslušenství</span>
+            </li>
+            <li  data-target="service">
+                <span>Servis</span>
+            </li>
+        </ul>
+        <div class="tabs__content">
+            <div id="description" class="active">
+                <div class="shrinked">
+                    {# {{ product.description|wpautop }} #}
+                    {% for item in description %}
+                        {% if item.layout == 'center' %}
+                            <div class="text-center">
+                                {% if item.subheading %}
+                                <h3>{{ item.subheading }}</h3>
+                                {% endif %}
+                                <h2>{{ item.main_heading }}</h2>
+                                <p>{{ item.text }}</p>
+                                <picture>
+                                    <source srcset="{{item.image.url |towebp }}" type="image/webp">
+                                    <source srcset="{{ item.image.url }}" type="image/png">
+                                    <img src="{{ item.image.url }}" alt="{{ item.image.alt }}" loading="lazy">
+                                </picture>
+                            </div>
+                        {% elseif item.layout == 'left' %}
+                            <div class="grid md:grid-cols-[40%_60%]">
+                                <picture>
+                                    <source srcset="{{item.image.url |towebp }}" type="image/webp">
+                                    <source srcset="{{ item.image.url }}" type="image/png">
+                                    <img src="{{ item.image.url }}" alt="{{ item.image.alt }}" loading="lazy">
+                                </picture>
+                                <div>
+                                    <h3>{{ item.subheading }}</h3>
+                                    <h2>{{ item.main_heading }}</h2>
+                                    <p>{{ item.text }}</p>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="grid md:grid-cols-[60%_40%]">
+                                <div>
+                                    <h3>{{ item.subheading }}</h3>
+                                    <h2>{{ item.main_heading }}</h2>
+                                    <p>{{ item.text }}</p>
+                                </div>
+                                <picture>
+                                    <source srcset="{{item.image.url |towebp }}" type="image/webp">
+                                    <source srcset="{{ item.image.url }}" type="image/png">
+                                    <img src="{{ item.image.url }}" alt="{{ item.image.alt }}" loading="lazy">
+                                </picture>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <button type="button" id="show-more"><span>Celý popis</span></button>
+            </div>
+
+            <div id="variations">
+                {% include "partials/variations.twig" %}
+            </div>
+            <div id="parameters">
+                <table class="w-full border-b border-grayDivider">
+                    <thead>
+                        <th class="text-24 text-left pb-3">Parametry</th>
+                    </thead>
+                    <tbody>
+                        {% for attribute in attributes %}
+                        <tr class="border-t border-grayDivider">
+                            <td class="p-3 font-bold border-r border-grayDivider w-1/2 md:w-1/3">{{ attribute.attribute_label }}</td>
+                            <td class="p-3">{{ attribute.attribute_value }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div id="accessories">
+                <div class="flex flex-wrap">
+                {% for product in accessories %}
+                    {% include 'components/productCard.twig' with {
+                        ID: product.ID
+                    }%}      
+                {% endfor %}
+                </div>
+            </div>
+            <div id="service">
+                <table class="w-full mb-4 border-b border-grayDivider">
+                    <thead>
+                        <th class="text-24 text-left pb-3">Ceník oprav</th>
+                    </thead>
+                    <tbody>
+                        {% for item in service %}
+                        <tr class="border-t border-grayDivider">
+                            <td class="p-3 font-bold border-r border-grayDivider w-1/2 md:w-[20%]">
+                                {{ item.name }}
+                                {% if item.discount %}
+                                <span class="font-bold text-red text-14">AKCE</span>
+                                {% endif %}
+                            </td>
+                            <td class="hidden p-3 border-r border-grayDivider md:table-cell">{{ item.description }}</td>
+                            <td class="p-3 border-r border-grayDivider {{ item.discount ? 'text-red font-bold' : '' }}">{{ item.price }}</td>
+                            <td class="p-3">{{ item.time }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <a href="https://www.opravimeiphone.cz/cs/cenik/" target="_blank" class="font-bold underline">Ceník všech oprav naleznete ZDE.</a>
+            </div>
+        </div>
+    </div>
+</section>
+
