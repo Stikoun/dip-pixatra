@@ -143,7 +143,7 @@ function get_variation_parent_ids_from_term( $term, $taxonomy, $type ){
 
 function get_products_by_attributes($category, $is_in_stock = true, $posts_per_page = 10, $page = 1, $variant = '', $color = '', $capacity = ''){
 	
-	$prod_ids = get_variation_parent_ids_from_term( $category, 'product_cat', 'term_id' );
+	$prod_ids = get_variation_parent_ids_from_term( $category, 'product_cat', 'slug' );
 	
 	if (empty($prod_ids)) return [];
 	
@@ -225,7 +225,7 @@ function get_products_by_attributes($category, $is_in_stock = true, $posts_per_p
 
 
 add_action('wp', function(){
-	// $products = get_products_by_attributes('iphone-8', true, -1, 1, '', '', ''); //varianta-a
+	$products = get_products_by_attributes('iphone-8', true, -1, 1, '', '', ''); //varianta-a
 	//$products = get_products_by_attributes('iphone', true, -1, 1, '', '', '');
 	
 	bdump($products);

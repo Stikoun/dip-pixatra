@@ -21,68 +21,25 @@ class ArchiveProductController
 	{
 		$context = Timber::context();
 
-		$args = array(
-    'orderby'  => 'name',
-	'limit' => -1
-);
-$productss = wc_get_product( 1072 );
-bdump($productss);
-
-// bdump($productss->get_attributes());
-// bdump($productss->get_attribute('pa_barva'));
-// bdump($productss->get_attribute('pa_kapacita'));
-// bdump($productss->get_attribute('pa_varianta'));
-
-$query = new WC_Product_Query(array(
-    'limit'     => -1,
-    'orderby'   => 'date',
-    'order'     => 'DESC',
-	'tax_query' => [
-		[
-			'taxonomy' => 'product_cat',
-			'terms' => 114,
-		],
-		[
-			'relation' => 'AND',
-			[
-				'taxonomy' => 'pa_varianta',
-				'field' => 'slug',
-				'terms'	=>  'varianta-a',
-				'operator'	=> 'IN',
-			],
-			[
-				'taxonomy' => 'pa_kapacita',
-				'field' => 'slug',
-				'terms'	=>  '128gb',
-				'operator'	=> 'IN',
-			],
-		],
-	],
-) );
-
-bdump($query->get_products());
-
 		if (!isset(get_queried_object()->term_id)) { //pro shop page, když je term null
-			$products_query = get_posts([
+			$products = get_posts([
 				'post_type' => 'product',
 				'posts_per_page' => -1,
 			]);
 
-			$context['subcategories'] = $this->appendDataToTerms(get_terms(array('taxonomy' => 'product_cat', 'hide_empty' => true, 'parent' => 0)));	
+			$context['subcategories'] = $this->appendDataToTerms(
+				get_terms(
+					array(
+						'taxonomy' => 'product_cat',
+						'hide_empty' => true,
+						'parent' => 0
+					)
+				)
+			);
 		}
 		else {
-			$products_query = Timber::get_posts([ //pro category page, když není term null
-				'post_type' => 'product',
-				'posts_per_page' => -1,
-				'tax_query' => [
-					'relation' => 'AND',
-					[
-						'taxonomy' => 'product_cat',
-						'terms' => get_queried_object()->term_id,
-					]
-				]
-			]);
-
+			$products = get_products_by_attributes(get_queried_object()->term_id, true, -1, 1, '', '', ''); //varianta-a
+			
 			$context['term_id'] = get_queried_object()->term_id;
 			$context['category'] = get_term( get_queried_object()->term_id, 'product_cat' );
 
@@ -93,13 +50,15 @@ bdump($query->get_products());
 
 		$context['options'] = get_fields('options');
 
-		$transformed_products = $this->transformProducts($products_query, true);
+		// $transformed_products = $this->transformProducts($products_query, true);
+		$context['products'] = $products;
+		bdump($products);
 		// $context['products'] = $transformed_products;
-		$context['products'] = $this->sortProducts($transformed_products, 'filter-cheap');
+		// $context['products'] = $this->sortProducts($transformed_products, 'filter-cheap');
 
-		$context['attribute_varianta'] = $this->getProductAttributes('pa_varianta', $context['products']);
-		$context['attribute_kapacita'] = $this->getProductAttributes('pa_kapacita', $context['products']);
-		$context['attribute_barva'] = $this->getProductAttributes('pa_barva', $context['products']);
+		// $context['attribute_varianta'] = $this->getProductAttributes('pa_varianta', $context['products']);
+		// $context['attribute_kapacita'] = $this->getProductAttributes('pa_kapacita', $context['products']);
+		// $context['attribute_barva'] = $this->getProductAttributes('pa_barva', $context['products']);
 
 
 		$context['best_sellers'] = get_field('best_sellers', get_queried_object());

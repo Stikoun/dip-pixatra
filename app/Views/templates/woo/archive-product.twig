@@ -110,15 +110,14 @@
             <div class="pt-2 w-full md:pl-10 md:pt-8">
                 <div id="product-wrapper">
                 {% for product in products %}
-                    {{ fn("timber_set_product", product) }}
                     {% if loop.index0 < productToShow %}
                         {% include 'components/productCard.twig' with {
-                            ID: product.ID,
+                            ID: product.get_id,
                             items: 3
                         } %}  
                     {% else %}
                         {% include 'components/productCard.twig' with {
-                            ID: product.ID,
+                            ID: product.get_id,
                             items: 3,
                             hidden: true,
                         } %}            
